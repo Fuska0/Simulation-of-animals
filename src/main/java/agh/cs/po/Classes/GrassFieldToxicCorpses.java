@@ -1,5 +1,28 @@
 package agh.cs.po.Classes;
 
-public class GrassFieldToxicCorpses {
+import java.util.HashMap;
 
+public class GrassFieldToxicCorpses extends AbstractWorldMap{
+    Parameters parameters = new Parameters();
+    public void GrassfieldForestedEquatoria(int n){
+        generatePlants(n);
+    }
+    protected HashMap<Vector2d,Plants> plantsHashMap = new HashMap<>();
+    private int n = parameters.plantsGrowingNumber;
+    private int a = parameters.mapHeight;
+    private int b = parameters.mapWidth;
+    private void generatePlants(int n) {
+
+    }
+    @Override
+    public boolean isOccupied(Vector2d position) {
+        return plantsHashMap.containsKey(position);
+    }
+    @Override
+    public Object objectAt(Vector2d position) {
+        if (super.objectAt(position) == null) {
+            return plantsHashMap.get(position);
+        }
+        return super.objectAt(position);
+    }
 }

@@ -10,6 +10,7 @@ public abstract class AbstractWorldMap implements IWorldMap {
 
     protected static HashMap<Vector2d, ArrayList<Animal>> animalsHashMap = new HashMap<>(); // to tymczasowe zmien ten static !!!
     protected HashMap<Vector2d, Plants> plantsHashMap = new HashMap<>();
+    protected ArrayList[][] deathsAmountArray = new ArrayList[parameters.mapHeight][parameters.mapWidth];
 
     public static String toString(Vector2d position){
         return String.valueOf(animalsHashMap.get(position).size()); //tutaj ten static tez jest tylko na chwilke
@@ -36,7 +37,7 @@ public abstract class AbstractWorldMap implements IWorldMap {
         animalList.sort(Comparator.comparing(Animal::getEnergy)
                 .thenComparing(Animal::getAliveDays).thenComparing(Animal::getKidsNumber));
     }
-    public void reproduction(ArrayList<Animal> animalList, IWorldMap map){
+    public void reproduction(ArrayList<Animal> animalList,int minEnergy){
         if (animalList.size() > 1){
             animalsSort(animalList);
             Random r = new Random();
@@ -44,11 +45,12 @@ public abstract class AbstractWorldMap implements IWorldMap {
                 Animal animal1 = animalList.get(i);
                 Animal animal2 = animalList.get(i);
                 if (Math.min(animal2.getEnergy(), animal1.getEnergy()) >= parameters.readyToBreed){
-                    Genes newGenes = new Genes();
+
+                    Genes genes = new Genes();
                     Animal animal3 = new Animal(animal1.getPosition(), r.nextInt(8),
                             parameters.energyYield*2, r.nextInt(parameters.genomSize+1),
-                            newGenes.genesSplicing(animal1,animal2), animal1.map );
-                    map.place(animal3);
+                            genes.genesSplicing(animal1,animal2), animal1.map );
+
                     animal1.takeEnergy();
                     animal2.takeEnergy();
                 }

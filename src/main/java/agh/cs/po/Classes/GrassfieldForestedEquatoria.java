@@ -11,9 +11,9 @@ public class GrassfieldForestedEquatoria extends AbstractWorldMap{ // zmienic na
     private int b = parameters.mapWidth;
 
     public GrassfieldForestedEquatoria(int n){
-        generateGrass(n);
+        generatePlants(n);
     }
-    private void generateGrass(int n) {
+    private void generatePlants(int n) {
         for(int i = 0; i< this.n; i++) {
             int x = ThreadLocalRandom.current().nextInt(0, a);
             int y = ThreadLocalRandom.current().nextInt((int) Math.floor(b/3), (int) Math.floor(2*b/3));
