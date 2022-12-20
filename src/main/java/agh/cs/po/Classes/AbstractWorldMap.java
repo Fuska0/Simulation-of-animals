@@ -36,7 +36,7 @@ public abstract class AbstractWorldMap implements IWorldMap {
         animalList.sort(Comparator.comparing(Animal::getEnergy)
                 .thenComparing(Animal::getAliveDays).thenComparing(Animal::getKidsNumber));
     }
-    public void reproduction(ArrayList<Animal> animalList,int minEnergy){
+    public void reproduction(ArrayList<Animal> animalList, IWorldMap map){
         if (animalList.size() > 1){
             animalsSort(animalList);
             Random r = new Random();
@@ -44,12 +44,11 @@ public abstract class AbstractWorldMap implements IWorldMap {
                 Animal animal1 = animalList.get(i);
                 Animal animal2 = animalList.get(i);
                 if (Math.min(animal2.getEnergy(), animal1.getEnergy()) >= parameters.readyToBreed){
-
-                    Genes genes = new Genes();
+                    Genes newGenes = new Genes();
                     Animal animal3 = new Animal(animal1.getPosition(), r.nextInt(8),
                             parameters.energyYield*2, r.nextInt(parameters.genomSize+1),
-                            genes.genesSplicing(animal1,animal2), animal1.map );
-
+                            newGenes.genesSplicing(animal1,animal2), animal1.map );
+                    map.place(animal3);
                     animal1.takeEnergy();
                     animal2.takeEnergy();
                 }
