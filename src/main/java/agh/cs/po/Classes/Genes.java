@@ -20,9 +20,13 @@ public class Genes {
     }
 
     public int[] genesSplicing(Animal father, Animal mother){
-
+        Random r = new Random();
+        int whichSide = r.nextInt(2);
         int sum = father.getEnergy() + mother.getEnergy();
-        int distribution = father.getEnergy() / sum;
+        double proportion = father.getEnergy() / sum;
+        int distribution;
+        if (whichSide == 0) {distribution = (int) (n * proportion);}
+        else {distribution =  (int) (n * (1 - proportion));}
         int[] genes = new int[n];
         for (int i = 0; i < distribution; i++){
             genes[i] = father.getGenes().getArrayGenes()[i];
