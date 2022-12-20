@@ -49,7 +49,7 @@ public class Animal {
             default -> throw new IllegalStateException("Unexpected value: " + direction);
         });
     }
-
+//
     public void move(int mapsize){
         int how = genes.getArrayGenes()[currentGen];
         Vector2d vector = unitToVector(how);

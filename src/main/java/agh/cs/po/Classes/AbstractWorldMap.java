@@ -12,7 +12,7 @@ public abstract class AbstractWorldMap implements IWorldMap {
     public static String toString(Vector2d position){
         return String.valueOf(animalsHashMap.get(position).size()); //tutaj ten static tez jest tylko na chwilke
     }
-
+//
     @Override
     public void place(Animal animal) {
         animalsHashMap.get(animal.getPosition()).add(animal);
