@@ -16,7 +16,7 @@ public class Animal {
 
     Parameters parameters = new Parameters();
 
-    public Animal(Vector2d position, int orientation, int energy, int currentGen, int[] genesn, IWorldMap map) {
+    public Animal(Vector2d position, int orientation, int energy, int currentGen, Genes genes, IWorldMap map) {
         this.position = position;
         this.orientation = orientation;
         this.energy = energy;

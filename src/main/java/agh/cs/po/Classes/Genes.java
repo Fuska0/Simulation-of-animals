@@ -22,7 +22,7 @@ public class Genes {
         return genes;
     }
 
-    public int[] genesSplicing(Animal father, Animal mother){
+    public Genes genesSplicing(Animal father, Animal mother){
         Random r = new Random();
         int whichSide = r.nextInt(2);
         int sum = father.getEnergy() + mother.getEnergy();
@@ -30,14 +30,14 @@ public class Genes {
         int distribution;
         if (whichSide == 0) {distribution = (int) (n * proportion);}
         else {distribution =  (int) (n * (1 - proportion));}
-        int[] genes = new int[n];
+        Genes genes = new Genes();
         for (int i = 0; i < distribution; i++){
-            genes[i] = father.getGenes().getArrayGenes()[i];
+            genes.getArrayGenes()[i] = father.getGenes().getArrayGenes()[i];
         }
         for (int i = distribution; i < n ; i++){
-            genes[i] = mother.getGenes().getArrayGenes()[i];
+            genes.getArrayGenes()[i] = mother.getGenes().getArrayGenes()[i];
         }
-        mutations(genes);
+        mutations(genes.getArrayGenes());
         return genes;
     }
 
