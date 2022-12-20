@@ -26,7 +26,7 @@ public class Vector2d {
 
     public Vector2d add(Vector2d other){
         return new Vector2d(x + other.x, y + other.y);
-    }
+    }//
 
     public Vector2d addWithMod(Vector2d other, int mapsize){
         return new Vector2d((x + other.x)%mapsize, (y + other.y)%mapsize);

@@ -74,7 +74,7 @@ public class MapVisualizer {
         if (this.map.isOccupied(currentPosition)) {
 
             result = AbstractWorldMap.toString(currentPosition);
-
+//
         } else {
             result = EMPTY_CELL;
         }
