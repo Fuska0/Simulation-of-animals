@@ -1,5 +1,6 @@
 package agh.cs.po.Classes;
-import agh.cs.po.Interfaces.*;
+
+import agh.cs.po.Interfaces.IWorldMap;
 public class Animal {
 
     public IWorldMap map;
@@ -13,7 +14,9 @@ public class Animal {
     private int aliveDays;
     private int deathDay;
 
-    public Animal(Vector2d position, int orientation, int energy, int currentGen, Genes genesn, IWorldMap map) {
+    Parameters parameters = new Parameters();
+
+    public Animal(Vector2d position, int orientation, int energy, int currentGen, int[] genesn, IWorldMap map) {
         this.position = position;
         this.orientation = orientation;
         this.energy = energy;
@@ -50,12 +53,14 @@ public class Animal {
         });
     }
 //
-    public void move(int mapsize){
+    public void move(){
         int how = genes.getArrayGenes()[currentGen];
         Vector2d vector = unitToVector(how);
-        this.position = this.position.addWithMod(vector,mapsize);
+        this.position = this.position.addWithMod(vector,parameters.mapHeight, parameters.mapWidth);
     }
 
-
+    public void takeEnergy(){
+        energy -= parameters.energyYield;
+    }
 
 }

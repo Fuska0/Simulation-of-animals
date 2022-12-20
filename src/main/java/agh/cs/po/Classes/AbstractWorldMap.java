@@ -6,6 +6,8 @@ import java.util.Comparator;
 import java.util.HashMap;
 public abstract class AbstractWorldMap implements IWorldMap {
 
+    Parameters parameters = new Parameters();
+
     protected static HashMap<Vector2d, ArrayList<Animal>> animalsHashMap = new HashMap<>(); // to tymczasowe zmien ten static !!!
     protected HashMap<Vector2d, Plants> plantsHashMap = new HashMap<>();
 
@@ -41,12 +43,15 @@ public abstract class AbstractWorldMap implements IWorldMap {
             for (int i = 0, j = 1; i < animalList.size() && j < animalList.size(); i+=2 , j+=2 ) {
                 Animal animal1 = animalList.get(i);
                 Animal animal2 = animalList.get(i);
-                if (animal2.getEnergy() >= minEnergy){
+                if (Math.min(animal2.getEnergy(), animal1.getEnergy()) >= parameters.readyToBreed){
 
+                    Genes genes = new Genes();
+                    Animal animal3 = new Animal(animal1.getPosition(), r.nextInt(8),
+                            parameters.energyYield*2, r.nextInt(parameters.genomSize+1),
+                            genes.genesSplicing(animal1,animal2), animal1.map );
 
-                    Animal animal3 = new Animal(animal1.getPosition(),
-                            r.nextInt(8), 2*minEnergy, r.nextInt(8), animal3.getGenes().genesSplicing(animal1,animal2) )
-
+                    animal1.takeEnergy();
+                    animal2.takeEnergy();
                 }
             }
         }

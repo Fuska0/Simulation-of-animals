@@ -3,16 +3,19 @@ import java.util.Random;
 
 public class Genes {
 
-    private int[] genes;
-    private int n;
 
-    public Genes(int n) {
+    Parameters parameters = new Parameters();
+    private int[] genes;
+    private int n = parameters.genomSize;
+
+    public Genes() {
         genes = new int[n];
         this.n = n;
         Random r = new Random();
         for (int i = 0; i < n; i++){
             genes[i] = r.nextInt(8);
         }
+
     }
 
     public int[] getArrayGenes(){
@@ -40,7 +43,7 @@ public class Genes {
 
     public void mutations(int [] genes){
         Random r = new Random();
-        int size = r.nextInt(8);
+        int size = r.nextInt(parameters.minMutationsNumber, parameters.maxMutationsNumber+1);
         int[] selected = new int[n];
         int counter = 0;
         while (counter < size) {
