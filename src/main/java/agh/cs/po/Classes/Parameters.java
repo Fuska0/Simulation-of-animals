@@ -2,17 +2,17 @@ package agh.cs.po.Classes;
 
 public class Parameters {
 
-    int mapHeight = 1;
-    int mapWidth = 1;
-    int startingPlantCount = 1;
-    int plantEnergy = 1;
-    int plantsGrowingNumber = 1;
-    int startingAnimalsCount = 1;
-    int animalStartEnergy = 1;
-    int readyToBreed = 1;
-    int energyYield = 1;
-    int minMutationsNumber = 1;
+    int mapHeight = 10;
+    int mapWidth = 10;
+    int startingPlantCount = 4;
+    int plantEnergy = 5;
+    int plantsGrowingNumber = 0;
+    int startingAnimalsCount = 5;
+    int animalStartEnergy = 5;
+    int readyToBreed = 5;
+    int energyYield = 5;
+    int minMutationsNumber = 3;
     int maxMutationsNumber = 1;
-    int genomSize = 1;
+    int genomSize = 4;
 
 }

@@ -1,18 +1,15 @@
 package agh.cs.po.Classes;
 
 import agh.cs.po.Interfaces.IWorldMap;
+
+import java.util.Random;
+
 public class Animal {
 
     public IWorldMap map;
     private Vector2d position;
-    private int orientation;
-    private int energy;
+    private int orientation,energy,currentGen,eatenPlants,kidsNumber,aliveDays,deathDay;
     private Genes genes;
-    private int currentGen;
-    private int eatenPlants;
-    private int kidsNumber;
-    private int aliveDays;
-    private int deathDay;
 
     Parameters parameters = new Parameters();
 
@@ -56,11 +53,29 @@ public class Animal {
     public void move(){
         int how = genes.getArrayGenes()[currentGen];
         Vector2d vector = unitToVector(how);
-        this.position = this.position.addWithMod(vector,parameters.mapHeight, parameters.mapWidth);
+        this.position = this.position.addWithModulo(vector,parameters.mapHeight, parameters.mapWidth);
+        Random r = new Random();
+        if (r.nextInt() < 2){
+            currentGen = r.nextInt(parameters.genomSize+1);
+        }
+        else currentGen = (currentGen + 1) % (parameters.genomSize+1);
     }
 
-    public void takeEnergy(){
-        energy -= parameters.energyYield;
+    public void takeEnergy(int howMany){
+        energy -= howMany;
+    }
+    public void addEnergy(int howMany) {energy += howMany;}
+
+    public String toString(){
+        return "-";
+    }
+
+    public void oneMoreAliveDay(){
+        aliveDays += 1;
+    }
+
+    public void sorryYourDead(){
+        deathDay = aliveDays;
     }
 
 }

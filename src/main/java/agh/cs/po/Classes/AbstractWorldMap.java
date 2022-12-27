@@ -8,28 +8,36 @@ public abstract class AbstractWorldMap implements IWorldMap {
 
     Parameters parameters = new Parameters();
 
-    protected static HashMap<Vector2d, ArrayList<Animal>> animalsHashMap = new HashMap<>(); // to tymczasowe zmien ten static !!!
-    protected HashMap<Vector2d, Plants> plantsHashMap = new HashMap<>();
+    protected  HashMap<Vector2d, ArrayList<Animal>> animalsHashMap = new HashMap<>(); // to tymczasowe zmien ten static !!!
     protected ArrayList[][] deathsAmountArray = new ArrayList[parameters.mapHeight][parameters.mapWidth];
 
-    public static String toString(Vector2d position){
-        return String.valueOf(animalsHashMap.get(position).size()); //tutaj ten static tez jest tylko na chwilke
-    }
-//
     @Override
     public void place(Animal animal) {
+       if (animalsHashMap.get(animal.getPosition()) == null) {
+           animalsHashMap.put(animal.getPosition(),new ArrayList<>());
+       }
         animalsHashMap.get(animal.getPosition()).add(animal);
     }
 
+
     @Override
     public Object objectAt(Vector2d position) {
-        return animalsHashMap.get(position);
+        if (animalsHashMap.get(position) != null) {
+        return animalsHashMap.get(position).get(0);
+        }
+        return null;
+    }
+
+    public boolean isOccupied(Vector2d position) {
+        return objectAt(position) != null;
     }
 
     public void positionChanged(Vector2d newPosition, Animal animal) {
+        if(animalsHashMap.get(newPosition) == null) {animalsHashMap.put(newPosition,
+                new ArrayList<Animal>());}
         Vector2d oldPosition = animal.getPosition();
-        ArrayList<Animal> animalList = animalsHashMap.get(oldPosition);
-        animalList.remove(animal);
+        animal.move();
+        animalsHashMap.get(oldPosition).remove(animal);
         animalsHashMap.get(newPosition).add(animal);
     }
 
@@ -39,11 +47,10 @@ public abstract class AbstractWorldMap implements IWorldMap {
     }
     public void reproduction(ArrayList<Animal> animalList,int minEnergy){
         if (animalList.size() > 1){
-            animalsSort(animalList);
             Random r = new Random();
             for (int i = 0, j = 1; i < animalList.size() && j < animalList.size(); i+=2 , j+=2 ) {
                 Animal animal1 = animalList.get(i);
-                Animal animal2 = animalList.get(i);
+                Animal animal2 = animalList.get(j);
                 if (Math.min(animal2.getEnergy(), animal1.getEnergy()) >= parameters.readyToBreed){
 
                     Genes genes = new Genes();
@@ -51,10 +58,61 @@ public abstract class AbstractWorldMap implements IWorldMap {
                             parameters.energyYield*2, r.nextInt(parameters.genomSize+1),
                             genes.genesSplicing(animal1,animal2), animal1.map );
 
-                    animal1.takeEnergy();
-                    animal2.takeEnergy();
+                    animal1.takeEnergy(parameters.energyYield);
+                    animal2.takeEnergy(parameters.energyYield);
                 }
             }
         }
     }
+
+    public String toString() {
+        MapVisualizer map = new MapVisualizer(this);
+        return map.draw(new Vector2d(0,0), new Vector2d(parameters.mapWidth, parameters.mapHeight));
+    }
+
+    public void moveAnimals(){
+        for (Vector2d position : animalsHashMap.keySet()) {
+            if(animalsHashMap.get(position) != null) {
+                for(int i = 0; i < animalsHashMap.get(position).size(); i++ ) {
+                    Animal animal = animalsHashMap.get(position).get(i);
+                    Vector2d newPosition = animal.unitToVector(animal.getCurrentGen());
+                    positionChanged(newPosition, animal);
+                }
+            }
+        }
+    }
+
+    public void sortAnimalslists(){
+        for (Vector2d position : animalsHashMap.keySet()) {
+            if(animalsHashMap.get(position) != null) {
+                animalsSort(animalsHashMap.get(position));
+            }
+        }
+    }
+
+    public void reproductingAnimals(){
+        for (Vector2d position : animalsHashMap.keySet()) {
+            if(animalsHashMap.get(position) != null) {
+                if(animalsHashMap.get(position).size() >1){
+                    reproduction(animalsHashMap.get(position), parameters.readyToBreed);
+                }
+            }
+        }
+    }
+
+    public void cleanUpDeadAnimal(){
+        for (Vector2d position : animalsHashMap.keySet()) { // trzeba to poprawic bo nie mozna edytowac hashmapy kiedy iterujesz po elementach !!!!
+            if(animalsHashMap.get(position) != null) {
+                for(Animal animal : animalsHashMap.get(position)) {
+                    if(animal.getEnergy() == 0) {
+                        animal.sorryYourDead();
+                        animalsHashMap.get(position).remove(animal);
+                    }
+                }
+            }
+        }
+    }
+
 }
+
+
