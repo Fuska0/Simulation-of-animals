@@ -5,6 +5,8 @@ package agh.cs.po.Classes;
 import java.util.Objects;
 
 public class Vector2d {
+
+    Parameters parameters = new Parameters();
     public Vector2d(int x, int y) {
         this.x = x;
         this.y = y;
@@ -28,8 +30,12 @@ public class Vector2d {
         return new Vector2d(x + other.x, y + other.y);
     }
 
-    public Vector2d addWithModulo(Vector2d other, int mapHeight, int mapWidht){
-        return new Vector2d((x + other.x)%mapWidht, (y + other.y)%mapHeight);
+    public Vector2d addWithModulo(Vector2d other){
+        int newX =(x + other.x)%( parameters.mapWidth + 1);
+        int newY =(y + other.y)%(parameters.mapHeight+1);
+        if (newX < 0) {newX = parameters.mapWidth;}
+        if (newY < 0) {newY = parameters.mapHeight;}
+        return new Vector2d(newX,newY);
     }
 
     public Vector2d subtract(Vector2d other){

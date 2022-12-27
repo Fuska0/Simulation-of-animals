@@ -53,7 +53,7 @@ public class Animal {
     public void move(){
         int how = genes.getArrayGenes()[currentGen];
         Vector2d vector = unitToVector(how);
-        this.position = this.position.addWithModulo(vector,parameters.mapHeight, parameters.mapWidth);
+        this.position = this.position.addWithModulo(vector);
         Random r = new Random();
         if (r.nextInt() < 2){
             currentGen = r.nextInt(parameters.genomSize+1);
@@ -67,7 +67,7 @@ public class Animal {
     public void addEnergy(int howMany) {energy += howMany;}
 
     public String toString(){
-        return "-";
+        return "#";
     }
 
     public void oneMoreAliveDay(){

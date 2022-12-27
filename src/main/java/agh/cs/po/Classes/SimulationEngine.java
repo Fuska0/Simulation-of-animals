@@ -25,6 +25,7 @@ public class SimulationEngine extends AbstractWorldMap{
                 genes, map));
 
         map.moveAnimals();
+        map.eatGrass();
 
     }
 

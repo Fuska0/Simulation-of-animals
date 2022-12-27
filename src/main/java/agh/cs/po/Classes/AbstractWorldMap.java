@@ -7,7 +7,7 @@ import java.util.HashMap;
 public abstract class AbstractWorldMap implements IWorldMap {
 
     Parameters parameters = new Parameters();
-
+    protected HashMap<Vector2d,Plants> plantsHashMap = new HashMap<>();
     protected  HashMap<Vector2d, ArrayList<Animal>> animalsHashMap = new HashMap<>(); // to tymczasowe zmien ten static !!!
     protected ArrayList[][] deathsAmountArray = new ArrayList[parameters.mapHeight][parameters.mapWidth];
 
@@ -22,7 +22,7 @@ public abstract class AbstractWorldMap implements IWorldMap {
 
     @Override
     public Object objectAt(Vector2d position) {
-        if (animalsHashMap.get(position) != null) {
+        if (animalsHashMap.get(position) != null && animalsHashMap.get(position).size() > 0) {
         return animalsHashMap.get(position).get(0);
         }
         return null;
@@ -71,11 +71,15 @@ public abstract class AbstractWorldMap implements IWorldMap {
     }
 
     public void moveAnimals(){
+        ArrayList<Vector2d> positionsList = new ArrayList<Vector2d>();
         for (Vector2d position : animalsHashMap.keySet()) {
+            positionsList.add(position);}
+        for (Vector2d position : positionsList){
             if(animalsHashMap.get(position) != null) {
                 for(int i = 0; i < animalsHashMap.get(position).size(); i++ ) {
                     Animal animal = animalsHashMap.get(position).get(i);
-                    Vector2d newPosition = animal.unitToVector(animal.getCurrentGen());
+                    Vector2d newPosition = animal.getPosition().
+                            addWithModulo(animal.unitToVector(animal.getCurrentGen()));
                     positionChanged(newPosition, animal);
                 }
             }
@@ -108,6 +112,17 @@ public abstract class AbstractWorldMap implements IWorldMap {
                         animal.sorryYourDead();
                         animalsHashMap.get(position).remove(animal);
                     }
+                }
+            }
+        }
+    }
+
+    public void eatGrass() {
+        for (Vector2d position : animalsHashMap.keySet()) {
+            if(animalsHashMap.get(position) != null && plantsHashMap.get(position) != null) {
+                if(animalsHashMap.get(position).size() > 0) {
+                    plantsHashMap.remove(position);
+                    animalsHashMap.get(position).get(0).addEnergy(parameters.plantEnergy);
                 }
             }
         }

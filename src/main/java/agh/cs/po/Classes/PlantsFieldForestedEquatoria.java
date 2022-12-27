@@ -1,11 +1,10 @@
 package agh.cs.po.Classes;
 
-import java.util.HashMap;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class PlantsFieldForestedEquatoria extends AbstractWorldMap{ // zmienic nazwa na PlantsFieldForestedEquatoria
     Parameters parameters = new Parameters();
-    protected HashMap<Vector2d,Plants> plantsHashMap = new HashMap<>();
+
     private int a = parameters.mapHeight;
     private int b = parameters.mapWidth;
 
@@ -45,19 +44,5 @@ public class PlantsFieldForestedEquatoria extends AbstractWorldMap{ // zmienic n
         return null;
     }
 
-    public void removeGrass(Vector2d position) {
 
-        if (animalsHashMap.get(position) != null){
-            animalsHashMap.remove(position);
-        }
-    }
-
-    public void eatGrass() {
-        for (Vector2d position : animalsHashMap.keySet()) {
-            if(animalsHashMap.get(position) != null && plantsHashMap.get(position) != null) {
-                removeGrass(position);
-                animalsHashMap.get(position).get(0).addEnergy(parameters.plantEnergy);
-            }
-        }
-    }
 }
