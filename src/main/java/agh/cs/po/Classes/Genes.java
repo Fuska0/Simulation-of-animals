@@ -47,7 +47,7 @@ public class Genes {
         int[] selected = new int[n];
         int counter = 0;
         while (counter < size) {
-            int x = r.nextInt(8);
+            int x = r.nextInt(parameters.genomSize);
             if (selected[x] != 1) {
                 selected[x] = 1;
                 genes[x] = r.nextInt(8);
