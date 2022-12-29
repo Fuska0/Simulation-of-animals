@@ -11,9 +11,7 @@ public class GrassFieldToxicCorpses extends AbstractWorldMap{
     private int n = parameters.plantsGrowingNumber;
     private int a = parameters.mapHeight;
     private int b = parameters.mapWidth;
-    private void generatePlants(int n) {
 
-    }
     @Override
     public boolean isOccupied(Vector2d position) {
         return plantsHashMap.containsKey(position);

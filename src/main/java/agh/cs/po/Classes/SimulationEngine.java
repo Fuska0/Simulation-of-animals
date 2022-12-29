@@ -24,11 +24,14 @@ public class SimulationEngine extends AbstractWorldMap{
         map.place(new Animal( new Vector2d(15,15),r.nextInt(8),parameters.animalStartEnergy, r.nextInt(parameters.genomSize),
                 genes, map));
 
-        for(int i = 0; i < 1; i ++){
-        map.moveAnimals();
-        map.sortAnimalslists();
-        map.eatGrass();
-        map.reproductingAnimals();
+        for(int i = 0; i < 20; i ++){
+            System.out.println(map.toString());
+            map.moveAnimals();
+            map.sortAnimalslists();
+            map.eatGrass();
+            map.reproductingAnimals();
+            map.addNewPlants();
+            map.cleanUpDeadAnimal();
             }
 
 

@@ -10,8 +10,8 @@ public abstract class AbstractWorldMap implements IWorldMap {
     protected HashMap<Vector2d,Plants> plantsHashMap = new HashMap<>();
     protected  HashMap<Vector2d, ArrayList<Animal>> animalsHashMap = new HashMap<>(); // to tymczasowe zmien ten static !!!
     protected ArrayList[][] deathsAmountArray = new ArrayList[parameters.mapHeight][parameters.mapWidth];
-
-
+    protected  ArrayList<Vector2d> freePlacesOnTheGroove = new ArrayList<Vector2d>();
+    protected  ArrayList<Vector2d> otherFreePlaces = new ArrayList<Vector2d>();
 
     @Override
     public void place(Animal animal) {
@@ -67,6 +67,29 @@ public abstract class AbstractWorldMap implements IWorldMap {
         }
     }
 
+    public void generatePlants(int numberOf) {
+        for(int i = 0; i< numberOf; i++) {
+            Random r = new Random();
+            int propability = r.nextInt(10);
+            if (freePlacesOnTheGroove.size() > 0 && propability < 8){
+                int tmp = r .nextInt(0,freePlacesOnTheGroove.size());
+                Vector2d position = freePlacesOnTheGroove.get(tmp);
+                addGrass(position);
+                freePlacesOnTheGroove.remove(position);
+
+            } else if (otherFreePlaces.size() > 0) {
+                int tmp = r .nextInt(0,otherFreePlaces.size());
+                Vector2d position = otherFreePlaces.get(tmp);
+                addGrass(position);
+                otherFreePlaces.remove(position);
+            }
+        }
+    }
+
+    public void addGrass(Vector2d position){
+        plantsHashMap.put(position, new Plants(position));
+    }
+
     public String toString() {
         MapVisualizer map = new MapVisualizer(this);
         return map.draw(new Vector2d(0,0), new Vector2d(parameters.mapWidth, parameters.mapHeight));
@@ -107,16 +130,22 @@ public abstract class AbstractWorldMap implements IWorldMap {
     }
 
     public void cleanUpDeadAnimal(){
-        for (Vector2d position : animalsHashMap.keySet()) { // trzeba to poprawic bo nie mozna edytowac hashmapy kiedy iterujesz po elementach !!!!
-            if(animalsHashMap.get(position) != null) {
-                for(Animal animal : animalsHashMap.get(position)) {
-                    if(animal.getEnergy() <= 0) {
+        ArrayList<Vector2d> positionsList = new ArrayList<Vector2d>();
+        for (Vector2d position : animalsHashMap.keySet()) {
+            positionsList.add(position);}
+        for (Vector2d position : positionsList) {
+            if (animalsHashMap.get(position) != null) {
+                for (int i = 0 ; i < animalsHashMap.get(position).size(); i++) {
+                    Animal animal = animalsHashMap.get(position).get(i);
+                    animal.addEnergy(-1);
+                    if (animal.getEnergy() <= 0) {
                         animal.sorryYourDead();
                         animalsHashMap.get(position).remove(animal);
                     }
                 }
             }
         }
+
     }
 
     public void eatGrass() {
@@ -125,10 +154,20 @@ public abstract class AbstractWorldMap implements IWorldMap {
                 if(animalsHashMap.get(position).size() > 0) {
                     plantsHashMap.remove(position);
                     animalsHashMap.get(position).get(0).addEnergy(parameters.plantEnergy);
+                    if (position.getY() >= (int) parameters.mapWidth/3 && position.getY() < (int) 2*parameters.mapWidth/3 + 1){
+                    freePlacesOnTheGroove.add(position);}
+                    else {otherFreePlaces.add(position);}
                 }
             }
         }
     }
+     public void addNewPlants(){
+
+        generatePlants(parameters.plantsGrowingNumber);
+
+     }
+
+
 
 }
 
