@@ -11,6 +11,8 @@ public abstract class AbstractWorldMap implements IWorldMap {
     protected  HashMap<Vector2d, ArrayList<Animal>> animalsHashMap = new HashMap<>(); // to tymczasowe zmien ten static !!!
     protected ArrayList[][] deathsAmountArray = new ArrayList[parameters.mapHeight][parameters.mapWidth];
 
+
+
     @Override
     public void place(Animal animal) {
        if (animalsHashMap.get(animal.getPosition()) == null) {
@@ -79,7 +81,7 @@ public abstract class AbstractWorldMap implements IWorldMap {
                 for(int i = 0; i < animalsHashMap.get(position).size(); i++ ) {
                     Animal animal = animalsHashMap.get(position).get(i);
                     Vector2d newPosition = animal.getPosition().
-                            addWithModulo(animal.unitToVector(animal.getCurrentGen()));
+                            addWithModulo(animal.unitToVector(animal.getGenes().getArrayGenes()[animal.getCurrentGen()]));
                     positionChanged(newPosition, animal);
                 }
             }
@@ -108,7 +110,7 @@ public abstract class AbstractWorldMap implements IWorldMap {
         for (Vector2d position : animalsHashMap.keySet()) { // trzeba to poprawic bo nie mozna edytowac hashmapy kiedy iterujesz po elementach !!!!
             if(animalsHashMap.get(position) != null) {
                 for(Animal animal : animalsHashMap.get(position)) {
-                    if(animal.getEnergy() == 0) {
+                    if(animal.getEnergy() <= 0) {
                         animal.sorryYourDead();
                         animalsHashMap.get(position).remove(animal);
                     }

@@ -15,7 +15,7 @@ public class PlantsFieldForestedEquatoria extends AbstractWorldMap{ // zmienic n
         for(int i = 0; i< numberOf; i++) {
             int x = ThreadLocalRandom.current().nextInt(0, a);
             int y = ThreadLocalRandom.current().nextInt((int) Math.floor(b/3), (int) Math.floor(2*b/3));
-            if (isOccupied(new Vector2d(x, y))) {
+            if (plantsHashMap.get(new Vector2d(x, y)) != null) {
                 i--;
             }
             else {
