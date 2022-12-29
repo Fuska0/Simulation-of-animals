@@ -31,8 +31,8 @@ public class Vector2d {
     }
 
     public Vector2d addWithModulo(Vector2d other){
-        int newX =(x + other.x)%( parameters.mapWidth + 1);
-        int newY =(y + other.y)%(parameters.mapHeight + 1);
+        int newX =(x + other.x)%( parameters.mapWidth +1);
+        int newY =(y + other.y)%(parameters.mapHeight +1);
         if (newX < 0) {newX = parameters.mapWidth;}
         if (newY < 0) {newY = parameters.mapHeight;}
         return new Vector2d(newX,newY);

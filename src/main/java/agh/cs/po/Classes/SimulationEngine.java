@@ -22,11 +22,7 @@ public class SimulationEngine extends AbstractWorldMap{
         }
 
 
-        for(int i = 0; i < 100; i ++){
-            System.out.println(map.toString());
-            System.out.println(map.freePlacesOnTheGroove);
-            System.out.println();
-            System.out.println(map.otherFreePlaces);
+        for(int i = 0; i < 100000; i ++){
             map.moveAnimals();
             map.sortAnimalslists();
             map.eatGrass();

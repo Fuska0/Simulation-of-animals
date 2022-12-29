@@ -34,8 +34,8 @@ public class Animal {
     public int getAliveDays() {return aliveDays;}
     public int getDeathDay() {return deathDay;}
 
-    public Vector2d unitToVector(int direction) throws IllegalStateException{
-        return(switch(direction) {
+    public Vector2d unitToVector( ) throws IllegalStateException{
+        return(switch(genes.getArrayGenes()[currentGen]) {
             case 0 -> new Vector2d(0,1);
             case 1 -> new Vector2d(1,1);
             case 2 -> new Vector2d(1,0);
@@ -44,13 +44,12 @@ public class Animal {
             case 5 -> new Vector2d(-1,-1);
             case 6 -> new Vector2d(-1,0);
             case 7 -> new Vector2d(-1,1);
-            default -> throw new IllegalStateException("Unexpected value: " + direction);
+            default -> throw new IllegalStateException("Unexpected value: " + currentGen);
         });
     }
 //
     public void move(){
-        int how = genes.getArrayGenes()[currentGen];
-        Vector2d vector = unitToVector(how);
+        Vector2d vector = unitToVector();
         this.position = this.position.addWithModulo(vector);
         Random r = new Random();
         if (r.nextInt() < 2){

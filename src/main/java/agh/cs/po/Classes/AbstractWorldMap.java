@@ -103,8 +103,8 @@ public abstract class AbstractWorldMap implements IWorldMap {
             if(animalsHashMap.get(position) != null) {
                 for(int i = 0; i < animalsHashMap.get(position).size(); i++ ) {
                     Animal animal = animalsHashMap.get(position).get(i);
-                    Vector2d newPosition = animal.getPosition().
-                            addWithModulo(animal.unitToVector(animal.getGenes().getArrayGenes()[animal.getCurrentGen()]));
+                    Vector2d how = animal.unitToVector();
+                    Vector2d newPosition = animal.getPosition().addWithModulo(how);
                     positionChanged(newPosition, animal);
                 }
             }
