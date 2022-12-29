@@ -154,7 +154,7 @@ public abstract class AbstractWorldMap implements IWorldMap {
                 if(animalsHashMap.get(position).size() > 0) {
                     plantsHashMap.remove(position);
                     animalsHashMap.get(position).get(0).addEnergy(parameters.plantEnergy);
-                    if (position.getY() >= (int) parameters.mapWidth/3 && position.getY() < (int) 2*parameters.mapWidth/3 + 1){
+                    if (position.getY() >= (int) parameters.mapHeight/3 + 1 && position.getY() < (int) 2*parameters.mapHeight/3 + 1){
                     freePlacesOnTheGroove.add(position);}
                     else {otherFreePlaces.add(position);}
                 }

@@ -20,12 +20,13 @@ public class SimulationEngine extends AbstractWorldMap{
                     genes, map );
             map.place(animal);
         }
-        Genes genes = new Genes();
-        map.place(new Animal( new Vector2d(15,15),r.nextInt(8),parameters.animalStartEnergy, r.nextInt(parameters.genomSize),
-                genes, map));
 
-        for(int i = 0; i < 20; i ++){
+
+        for(int i = 0; i < 100; i ++){
             System.out.println(map.toString());
+            System.out.println(map.freePlacesOnTheGroove);
+            System.out.println();
+            System.out.println(map.otherFreePlaces);
             map.moveAnimals();
             map.sortAnimalslists();
             map.eatGrass();
