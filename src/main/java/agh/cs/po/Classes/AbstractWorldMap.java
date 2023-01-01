@@ -166,6 +166,17 @@ public abstract class AbstractWorldMap implements IWorldMap {
         generatePlants(parameters.plantsGrowingNumber);
 
      }
+    public void createLife(AbstractWorldMap map) {
+        Random r = new Random();
+        for (int i = 0; i < parameters.startingAnimalsCount; i++) {
+            Genes genes = new Genes();
+            Vector2d position = new Vector2d(r.nextInt(parameters.mapWidth), r.nextInt(parameters.mapHeight));
+            Animal animal = new Animal(position,
+                    r.nextInt(8), parameters.animalStartEnergy, r.nextInt(parameters.genomSize),
+                    genes, map);
+            map.place(animal);
+        }
+    }
 
 
 

@@ -10,29 +10,24 @@ public class SimulationEngine extends AbstractWorldMap{
     public AbstractWorldMap map;
 
 
-    public SimulationEngine(AbstractWorldMap map){
+    public SimulationEngine(AbstractWorldMap map) {
         Random r = new Random();
-        for(int i = 0 ; i < parameters.startingAnimalsCount; i++) {
+        for (int i = 0; i < parameters.startingAnimalsCount; i++) {
             Genes genes = new Genes();
-            Vector2d position = new Vector2d(r.nextInt(parameters.mapWidth),r.nextInt(parameters.mapHeight));
+            Vector2d position = new Vector2d(r.nextInt(parameters.mapWidth), r.nextInt(parameters.mapHeight));
             Animal animal = new Animal(position,
-                    r.nextInt(8),parameters.animalStartEnergy, r.nextInt(parameters.genomSize),
-                    genes, map );
+                    r.nextInt(8), parameters.animalStartEnergy, r.nextInt(parameters.genomSize),
+                    genes, map);
             map.place(animal);
         }
-
-
-        for(int i = 0; i < 100000; i ++){
-            map.moveAnimals();
-            map.sortAnimalslists();
-            map.eatGrass();
-            map.reproductingAnimals();
-            map.addNewPlants();
-            map.cleanUpDeadAnimal();
-            }
-
-
-
+    }
+    public static void evolve(AbstractWorldMap map){
+        map.moveAnimals();
+        map.sortAnimalslists();
+        map.eatGrass();
+        map.reproductingAnimals();
+        map.addNewPlants();
+        map.cleanUpDeadAnimal();
     }
 
 }
