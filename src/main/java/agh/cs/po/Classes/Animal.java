@@ -75,4 +75,16 @@ public class Animal {
         deathDay = aliveDays;
     }
 
+    public String label(){
+        StringBuilder napis = new StringBuilder();
+        String prefix = "";
+        for(Animal animal : map.animalsHashMap.get(position)){
+            napis.append(prefix);
+            prefix = ",";
+            napis.append(Integer.toString(animal.getEnergy()));
+
+            }
+
+        return String.valueOf(napis);
+    }
 }

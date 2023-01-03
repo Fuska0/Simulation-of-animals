@@ -15,4 +15,8 @@ public class Plants {
     public String toString(){
         return "*";
     }
+
+    public String getImagePath(){
+        return "glon";
+    }
 }

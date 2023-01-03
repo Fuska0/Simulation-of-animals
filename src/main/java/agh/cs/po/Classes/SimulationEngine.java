@@ -45,7 +45,7 @@ public class SimulationEngine extends AbstractWorldMap implements Runnable{
         this.moveDelay = delay;
     }
     public void run()  {
-        for(int i = 0 ; i < 10 ; i++)
+        while(true)
         {
             app.refreshMap();
             System.out.println(map);

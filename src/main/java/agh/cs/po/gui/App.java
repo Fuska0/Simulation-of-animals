@@ -7,7 +7,10 @@ import agh.cs.po.Classes.Vector2d;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.HPos;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -27,8 +30,8 @@ public class App extends Application {
     public void xyLabel(){
         Label label = new Label("y/x");
         GridPane.setHalignment(label, HPos.CENTER);
-        gridPane.getColumnConstraints().add(new ColumnConstraints(WIDTH));
-        gridPane.getRowConstraints().add(new RowConstraints(HEIGHT));
+        gridPane.getColumnConstraints().add(new ColumnConstraints(25));
+        gridPane.getRowConstraints().add(new RowConstraints(25));
         gridPane.add(label, 0, 0);
     }
 
@@ -36,7 +39,7 @@ public class App extends Application {
         for (int i = 1; i <= WIDTH; i++){
             Label label = new Label(Integer.toString(i-1));
             GridPane.setHalignment(label, HPos.CENTER);
-            gridPane.getColumnConstraints().add(new ColumnConstraints(WIDTH));
+            gridPane.getColumnConstraints().add(new ColumnConstraints(35));
             gridPane.add(label, i, 0);
 
         }
@@ -45,21 +48,22 @@ public class App extends Application {
     public void rowsFunction(){
         for (int i = 1; i <= HEIGHT; i++) {
             Label label = new Label(Integer.toString(i-1));
-            gridPane.getRowConstraints().add(new RowConstraints(HEIGHT));
+            gridPane.getRowConstraints().add(new RowConstraints(35));
             GridPane.setHalignment(label, HPos.CENTER);
             gridPane.add(label, 0, i );
         }
     }
 
     public void addElements(){
-        for (int x = 0; x < WIDTH; x++) {
-            for (int y = 0; y < HEIGHT; y++) {
-                Vector2d position = new Vector2d(x, y);
+        for (int x = 1; x <= WIDTH; x++) {
+            for (int y = 1; y <= HEIGHT; y++) {
+                Vector2d position = new Vector2d(x-1, y-1);
                 Object object = map.objectAt(position);
                 if (object != null) {
-                    Label label = new Label(object.toString());
-                    gridPane.add(label, position.x+1, position.y+1);
-                    GridPane.setHalignment(label, HPos.CENTER);
+                    GuiElementBox elementBox = new GuiElementBox(map.objectAt(position));
+                    gridPane.add(elementBox.getvBox(),x,y);
+                    GridPane.setHalignment(elementBox.getvBox(),HPos.CENTER);
+
                 }
             }
         }
@@ -83,6 +87,29 @@ public class App extends Application {
             prepareScene();
         });
     }
+    public Button stopButton(Stage primaryStage){
+        Button stopButton = new Button("Stop");
+        stopButton.setOnAction((action) -> {
+            primaryStage.close();
+            System.exit(0);
+        });
+
+        return stopButton;
+    }
+
+    public Button statisticsButton(Stage primaryStage){
+        Button statisticsButton = new Button("statistics");
+        Label label = new Label();
+        statisticsButton.setOnAction((action) -> {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setContentText(map.getStatistic());
+            alert.showAndWait();
+        });
+
+        return statisticsButton;
+    }
+
+
     @Override
     public void init() throws Exception {
 
@@ -93,14 +120,29 @@ public class App extends Application {
 
     }
 
+
     @Override
     public void start(Stage primaryStage) throws InterruptedException {
         refreshMap();
-        Scene scene = new Scene(gridPane, 1500, 800);
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        Button button = stopButton(primaryStage);
+        Button statisticButton = statisticsButton(primaryStage);
+
         Thread thread = new Thread((Runnable) engine);
         thread.start();
+
+
+        GridPane root = new GridPane();
+        root.add(gridPane,1,0);
+        root.add(button,1,1);
+        root.add(statisticButton,0,0);
+        root.setAlignment(Pos.CENTER);
+
+
+
+
+        Scene scene = new Scene(root,1500,800);
+        primaryStage.setScene(scene);
+        primaryStage.show();
 
     }
 

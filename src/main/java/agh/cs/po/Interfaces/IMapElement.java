@@ -7,8 +7,9 @@ public interface IMapElement {
     Vector2d getPosition();
 
 
-
-
-
     String getImageName();
+
+    String getImagePath();
+
+    String getDesc();
 }
