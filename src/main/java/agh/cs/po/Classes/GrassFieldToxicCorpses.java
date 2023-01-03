@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 public class GrassFieldToxicCorpses extends AbstractWorldMap{
     Parameters parameters = new Parameters();
+
     public void GrassfieldForestedEquatoria(int n){
         generatePlants(n);
     }

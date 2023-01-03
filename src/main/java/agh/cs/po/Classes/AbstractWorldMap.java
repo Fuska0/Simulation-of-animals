@@ -9,7 +9,7 @@ public abstract class AbstractWorldMap implements IWorldMap {
     Parameters parameters = new Parameters();
     protected HashMap<Vector2d,Plants> plantsHashMap = new HashMap<>();
     protected  HashMap<Vector2d, ArrayList<Animal>> animalsHashMap = new HashMap<>();
-    protected ArrayList[][] deathsAmountArray = new ArrayList[parameters.mapHeight][parameters.mapWidth];
+    protected int[][] deathsAmountArray=new int[parameters.mapWidth][parameters.mapHeight];
     protected  ArrayList<Vector2d> freePlacesOnTheGroove = new ArrayList<Vector2d>();
     protected  ArrayList<Vector2d> otherFreePlaces = new ArrayList<Vector2d>();
     protected int animalCount = 0, plantCount = 0,freeSpaces =0 ,avgEnergy=0,avdLivingDays=0;
@@ -159,7 +159,7 @@ public abstract class AbstractWorldMap implements IWorldMap {
                     if (animal.getEnergy() <= 0) {
                         animal.sorryYourDead();
                         animalsHashMap.get(position).remove(animal);
-
+                        deathsAmountArray[position.x][position.y]+=1;
                     }
                     else {
                         animal.oneMoreAliveDay();
