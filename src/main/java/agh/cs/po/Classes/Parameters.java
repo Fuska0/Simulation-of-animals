@@ -2,12 +2,12 @@ package agh.cs.po.Classes;
 
 public class Parameters {
 
-    public int mapHeight =20;
-    public int mapWidth = 36;
-    int startingPlantCount = 10;
+    public int mapHeight =10;
+    public int mapWidth = 15;
+    int startingPlantCount = 1;
     int plantEnergy = 100;
-    int plantsGrowingNumber = 25;
-    int startingAnimalsCount = 35;
+    int plantsGrowingNumber = 5;
+    int startingAnimalsCount = 1;
     int animalStartEnergy = 100;
     int readyToBreed = 50;
     int energyYield = 20;

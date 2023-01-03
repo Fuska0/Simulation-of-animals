@@ -1,16 +1,14 @@
 package agh.cs.po.Interfaces;
-import agh.cs.po.Classes.*;
+
+import agh.cs.po.Classes.Vector2d;
 
 public interface IMapElement {
-
+    String toString();
     Vector2d getPosition();
 
-    String toString();
 
-    boolean isAt(Vector2d position);
 
-    void addObserver();
 
-    void removeObserver();
+
+    String getImageName();
 }
-
