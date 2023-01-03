@@ -143,9 +143,10 @@ public abstract class AbstractWorldMap implements IWorldMap {
 
     public void cleanUpDeadAnimal(){
         ArrayList<Vector2d> positionsList = new ArrayList<Vector2d>();
-        int tmpAnimalsCount = 0, tmpOccupiedSpaces= 0, tmpEnergySum=0, tmpAliveDaysSum = 0 ;
+        int tmpAnimalsCount = 0, tmpOccupiedSpaces= 0, tmpEnergySum=0, tmpAliveDaysSum = 0;
         for (Vector2d position : animalsHashMap.keySet()) {
-            positionsList.add(position);}
+            positionsList.add(position);
+        }
         for (Vector2d position : positionsList) {
             if (animalsHashMap.get(position) != null) {
                 tmpOccupiedSpaces++;
@@ -162,6 +163,14 @@ public abstract class AbstractWorldMap implements IWorldMap {
                         tmpEnergySum+=animal.getEnergy();
                         tmpAnimalsCount += 1;
                         tmpAliveDaysSum += animal.getAliveDays();}
+                }
+            }
+        }
+        for (int i = 0 ; i < parameters.mapWidth; i++){
+            for (int j = 0 ; j < parameters.mapHeight; j++){
+                Vector2d pos = new Vector2d(i,j);
+                if (animalsHashMap.get(pos)!=null || plantsHashMap.get(pos)!=null){
+                    tmpOccupiedSpaces++;
                 }
             }
         }
