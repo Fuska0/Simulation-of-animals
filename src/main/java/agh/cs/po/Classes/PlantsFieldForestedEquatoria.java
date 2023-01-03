@@ -14,20 +14,22 @@ public class PlantsFieldForestedEquatoria extends AbstractWorldMap{ // zmienic n
     public void addFreePlaces(){
         for(int i = 0; i < a+1; i++){
             for(int j = 0; j <= b ; j++){
-                if (j >= (int) b/3 + 1 && j < (int) 2*b/3 + 1){
-                freePlacesOnTheGroove.add(new Vector2d(i,j));}
-                else {otherFreePlaces.add(new Vector2d(i,j));}
+                if (plantsHashMap.get(new Vector2d(i, j)) == null) {
+                    if (j >= (int) b/3 + 1 && j < (int) 2*b/3 + 1) {
+                        freePlacesOnTheGroove.add(new Vector2d(i, j));
+                    }
+                    else{
+                        otherFreePlaces.add(new Vector2d(i, j));
+                    }
+                }
             }
         }
     }
 
-
     @Override
     public boolean isOccupied(Vector2d position) {
-
         return objectAt(position) != null;
     }
-
 
     @Override
     public Object objectAt(Vector2d position) {

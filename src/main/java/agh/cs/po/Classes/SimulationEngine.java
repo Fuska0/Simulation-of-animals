@@ -27,9 +27,6 @@ public class SimulationEngine extends AbstractWorldMap implements Runnable{
             map.place(animal);
             System.out.println("Animal placed on map: " + animal);
         }
-
-
-
     }
 
     public void evolution() {

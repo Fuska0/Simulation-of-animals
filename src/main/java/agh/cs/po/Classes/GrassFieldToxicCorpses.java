@@ -17,6 +17,8 @@ public class GrassFieldToxicCorpses extends AbstractWorldMap{
     public boolean isOccupied(Vector2d position) {
         return plantsHashMap.containsKey(position);
     }
+
+
     @Override
     public Object objectAt(Vector2d position) {
         if (super.objectAt(position) == null) {
