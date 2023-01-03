@@ -47,7 +47,7 @@ public class Animal {
             default -> throw new IllegalStateException("Unexpected value: " + currentGen);
         });
     }
-//
+    //
     public void move(){
         Vector2d vector = unitToVector();
         this.position = this.position.addWithModulo(vector);
@@ -83,7 +83,7 @@ public class Animal {
             prefix = ",";
             napis.append(Integer.toString(animal.getEnergy()));
 
-            }
+        }
 
         return String.valueOf(napis);
     }

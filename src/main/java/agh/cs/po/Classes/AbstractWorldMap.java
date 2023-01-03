@@ -16,11 +16,11 @@ public abstract class AbstractWorldMap implements IWorldMap {
 
     @Override
     public void place(Animal animal) {
-       if (animalsHashMap.get(animal.getPosition()) == null) {
-           animalsHashMap.put(animal.getPosition(),new ArrayList<>());
-       }
-       animalsHashMap.get(animal.getPosition()).add(animal);
-       animalCount++;
+        if (animalsHashMap.get(animal.getPosition()) == null) {
+            animalsHashMap.put(animal.getPosition(),new ArrayList<>());
+        }
+        animalsHashMap.get(animal.getPosition()).add(animal);
+        animalCount++;
     }
 
     public String getStatistic(){
@@ -30,12 +30,12 @@ public abstract class AbstractWorldMap implements IWorldMap {
         napis.append("Free Spaces: ").append(Integer.toString(freeSpaces)).append("\r\n");
         napis.append("Average energy: ").append(Integer.toString(avgEnergy)).append("\r\n");
         napis.append("Average living days: ").append(Integer.toString(avdLivingDays)).append("\r\n");
-    return String.valueOf(napis);}
+        return String.valueOf(napis);}
 
     @Override
     public Object objectAt(Vector2d position) {
         if (animalsHashMap.get(position) != null && animalsHashMap.get(position).size() > 0) {
-        return animalsHashMap.get(position).get(0);
+            return animalsHashMap.get(position).get(0);
         }
         return null;
     }
@@ -106,10 +106,6 @@ public abstract class AbstractWorldMap implements IWorldMap {
         plantCount ++;
     }
 
-    public String toString() {
-        MapVisualizer map = new MapVisualizer(this);
-        return map.draw(new Vector2d(0,0), new Vector2d(parameters.mapWidth, parameters.mapHeight));
-    }
 
     public void moveAnimals(){
         ArrayList<Vector2d> positionsList = new ArrayList<Vector2d>();
@@ -172,7 +168,7 @@ public abstract class AbstractWorldMap implements IWorldMap {
         freeSpaces = parameters.mapHeight * parameters.mapWidth - tmpOccupiedSpaces;
         animalCount = tmpAnimalsCount;
         if (tmpAnimalsCount > 0) {avgEnergy = (int) tmpEnergySum / tmpAnimalsCount;
-                                avdLivingDays = tmpAliveDaysSum / tmpAnimalsCount;}
+            avdLivingDays = tmpAliveDaysSum / tmpAnimalsCount;}
         else {avgEnergy = 0;
             avdLivingDays = 0;}
     }
@@ -185,17 +181,17 @@ public abstract class AbstractWorldMap implements IWorldMap {
                     animalsHashMap.get(position).get(0).addEnergy(parameters.plantEnergy);
                     plantCount -= 1;
                     if (position.getY() >= (int) parameters.mapHeight/3 + 1 && position.getY() < (int) 2*parameters.mapHeight/3 + 1){
-                    freePlacesOnTheGroove.add(position);}
+                        freePlacesOnTheGroove.add(position);}
                     else {otherFreePlaces.add(position);}
                 }
             }
         }
     }
-     public void addNewPlants(){
+    public void addNewPlants(){
 
         generatePlants(parameters.plantsGrowingNumber);
 
-     }
+    }
 }
 
 

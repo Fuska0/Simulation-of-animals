@@ -25,7 +25,7 @@ public class SimulationEngine extends AbstractWorldMap implements Runnable{
                     r.nextInt(8),parameters.animalStartEnergy, r.nextInt(parameters.genomSize),
                     genes, map );
             map.place(animal);
-            System.out.println("Animal placed on map: " + animal);
+
         }
     }
 
@@ -45,7 +45,6 @@ public class SimulationEngine extends AbstractWorldMap implements Runnable{
         while(true)
         {
             app.refreshMap();
-            System.out.println(map);
             try{
                 evolution();
                 Thread.sleep(moveDelay);
