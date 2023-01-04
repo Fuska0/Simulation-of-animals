@@ -13,6 +13,7 @@ public class GuiElementBox {
     private ImageView imageView = new ImageView();
     private VBox vBox = new VBox();
 
+
     public GuiElementBox(Object element) {
         String tmpPNG, tmpLabel;
 

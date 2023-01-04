@@ -45,6 +45,7 @@ public class SimulationEngine extends AbstractWorldMap implements Runnable{
         writeToCSV.save(map.getStatistic());
     }
 
+
     public void setMoveDelay(int delay){
         this.moveDelay = delay;
     }

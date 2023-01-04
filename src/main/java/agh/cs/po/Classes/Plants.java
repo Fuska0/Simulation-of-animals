@@ -10,6 +10,7 @@ public class Plants {
         this.energy = parameters.plantEnergy;
     }
 
+
     public Vector2d getPosition() {
         return position;
     }

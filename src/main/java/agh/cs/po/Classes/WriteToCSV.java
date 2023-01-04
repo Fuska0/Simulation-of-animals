@@ -19,6 +19,7 @@ public class WriteToCSV extends AbstractWorldMap{
             fw.close();
         } catch (Exception e) {
             e.printStackTrace();
+
         }
     }
 }

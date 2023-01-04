@@ -19,6 +19,7 @@ public class Genes {
 
     }
 
+
     public int[] getArrayGenes(){
         return genes;
     }

@@ -256,5 +256,6 @@ public abstract class AbstractWorldMap implements IWorldMap {
 
         freeSpaces = parameters.mapHeight*parameters.mapWidth-tmp;
         plantCount = tmp2;
+
     }
 }

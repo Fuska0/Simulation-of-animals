@@ -92,6 +92,7 @@ public class Animal {
             prefix = ",";
             napis.append(Integer.toString(animal.getEnergy()));
 
+
         }
 
         return String.valueOf(napis);

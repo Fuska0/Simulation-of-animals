@@ -11,6 +11,7 @@ public class Vector2d {
         this.y = y;
     }
     public final int x;
+
     public final int y;
 
     @Override

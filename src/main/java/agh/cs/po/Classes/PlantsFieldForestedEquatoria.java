@@ -16,6 +16,7 @@ public class PlantsFieldForestedEquatoria extends AbstractWorldMap {
         generatePlants(parameters.startingPlantCount);
     }
 
+
     @Override
     public boolean isOccupied(Vector2d position) {
         return objectAt(position) != null;
