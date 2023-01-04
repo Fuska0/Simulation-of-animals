@@ -6,7 +6,6 @@ import java.util.Objects;
 
 public class Vector2d {
 
-    Parameters parameters = new Parameters();
     public Vector2d(int x, int y) {
         this.x = x;
         this.y = y;

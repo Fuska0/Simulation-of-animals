@@ -4,11 +4,13 @@ import java.util.Random;
 public class Genes {
 
 
-    Parameters parameters = new Parameters();
+    Parameters parameters;
     private int[] genes;
-    private int n = parameters.genomSize;
+    private int n;
 
-    public Genes() {
+    public Genes(Parameters parameters) {
+        this.parameters = parameters;
+        this.n = parameters.genomSize;
         genes = new int[n];
         Random r = new Random();
         for (int i = 0; i < n; i++){
@@ -29,7 +31,7 @@ public class Genes {
         int distribution;
         if (whichSide == 0) {distribution = (int) (n * proportion);}
         else {distribution =  (int) (n * (1 - proportion));}
-        Genes genes = new Genes();
+        Genes genes = new Genes(parameters);
         for (int i = 0; i < distribution; i++){
             genes.getArrayGenes()[i] = father.getGenes().getArrayGenes()[i];
         }

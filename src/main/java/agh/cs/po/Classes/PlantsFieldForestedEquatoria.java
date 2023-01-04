@@ -1,10 +1,18 @@
 package agh.cs.po.Classes;
 
 public class PlantsFieldForestedEquatoria extends AbstractWorldMap{ // zmienic nazwa na PlantsFieldForestedEquatoria
-    Parameters parameters = new Parameters();
+    Parameters parameters;
 
-    private int b = parameters.mapHeight;
-    private int a = parameters.mapWidth;
+    public PlantsFieldForestedEquatoria(Parameters parameters){
+        super(parameters);
+        this.a = parameters.mapWidth;
+        this.b = parameters.mapHeight;
+        addFreePlaces();
+        generatePlants(parameters.startingPlantCount);
+    }
+
+    private int b;
+    private int a;
 
     public PlantsFieldForestedEquatoria() {
         addFreePlaces();

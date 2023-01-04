@@ -1,9 +1,6 @@
 package agh.cs.po.gui;
 
-import agh.cs.po.Classes.AbstractWorldMap;
-import agh.cs.po.Classes.PlantsFieldForestedEquatoria;
-import agh.cs.po.Classes.SimulationEngine;
-import agh.cs.po.Classes.Vector2d;
+import agh.cs.po.Classes.*;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.HPos;
@@ -20,12 +17,20 @@ import javafx.stage.Stage;
 public class App extends Application {
 
 
-    private agh.cs.po.Classes.Parameters par = new agh.cs.po.Classes.Parameters();
+    private agh.cs.po.Classes.Parameters par;
+
+    private int WIDTH;
+    private int HEIGHT;
+
+    public App(agh.cs.po.Classes.Parameters parameters){
+        this.par = parameters;
+        this.HEIGHT = par.mapHeight;
+        this.WIDTH = par.mapWidth;
+    }
     private AbstractWorldMap map;
     private SimulationEngine engine;
     private GridPane gridPane;
-    private int WIDTH = par.mapWidth;
-    private int HEIGHT = par.mapHeight;
+
 
     public void xyLabel(){
         Label label = new Label("y/x");
@@ -114,7 +119,7 @@ public class App extends Application {
     public void init() throws Exception {
 
         map = new PlantsFieldForestedEquatoria();
-        engine = new SimulationEngine(map, this);
+        engine = new SimulationEngine(map, this, par);
         engine.setMoveDelay(1000);
         gridPane = new GridPane();
 
@@ -124,8 +129,8 @@ public class App extends Application {
     @Override
     public void start(Stage primaryStage) throws InterruptedException {
         //refreshMap();
-        map = new PlantsFieldForestedEquatoria();
-        engine = new SimulationEngine(map, this);
+        map = new PlantsFieldForestedEquatoria(par);
+        engine = new SimulationEngine(map, this, par);
         engine.setMoveDelay(1000);
         gridPane = new GridPane();
         prepareScene();

@@ -9,9 +9,9 @@ public class Animal {
     private int orientation,energy,currentGen,eatenPlants,kidsNumber,aliveDays,deathDay;
     private Genes genes;
 
-    Parameters parameters = new Parameters();
+    Parameters parameters;
 
-    public Animal(Vector2d position, int orientation, int energy, int currentGen, Genes genes, AbstractWorldMap map) {
+    public Animal(Vector2d position, int orientation, int energy, int currentGen, Genes genes, AbstractWorldMap map, Parameters parameters) {
         this.position = position;
         this.orientation = orientation;
         this.energy = energy;
@@ -22,6 +22,7 @@ public class Animal {
         this.aliveDays = 0;
         this.deathDay = 0;
         this.map = map;
+        this.parameters = parameters;
     }
 
     public Vector2d getPosition() {return position;}

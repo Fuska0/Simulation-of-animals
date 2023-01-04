@@ -2,17 +2,35 @@ package agh.cs.po.Classes;
 
 public class Parameters {
 
-    public int mapHeight =10;
-    public int mapWidth = 20;
-    int startingPlantCount = 15;
-    int plantEnergy = 5;
-    int plantsGrowingNumber = 5;
-    int startingAnimalsCount = 100;
-    int animalStartEnergy = 100;
-    int readyToBreed = 6;
-    int energyYield = 3;
-    int minMutationsNumber = 1;
-    int maxMutationsNumber = 9;
-    int genomSize = 10;
+    public Parameters(int mapHeight, int mapWidth, int startingPlantCount, int plantEnergy,
+                      int plantsGrowingNumber, int startingAnimalsCount, int animalStartEnergy, int readyToBreed, int energyYield,
+                      int minMutationsNumber, int maxMutationsNumber, int genomSize)
+    {
+        this.mapHeight = mapHeight;
+        this.mapWidth = mapWidth;
+        this. startingAnimalsCount = startingAnimalsCount;
+        this. startingPlantCount = startingPlantCount;
+        this.plantEnergy = plantEnergy;
+        this.minMutationsNumber = minMutationsNumber;
+        this.maxMutationsNumber = maxMutationsNumber;
+        this.plantsGrowingNumber = plantsGrowingNumber;
+        this.animalStartEnergy = animalStartEnergy;
+        this.readyToBreed = readyToBreed;
+        this.energyYield = energyYield;
+        this.genomSize = genomSize;
+    }
+
+    public int mapHeight;
+    public int mapWidth;
+    int startingPlantCount;
+    int plantEnergy ;
+    int plantsGrowingNumber ;
+    int startingAnimalsCount ;
+    int animalStartEnergy ;
+    int readyToBreed ;
+    int energyYield ;
+    int minMutationsNumber ;
+    int maxMutationsNumber ;
+    int genomSize ;
 
 }

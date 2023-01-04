@@ -7,23 +7,26 @@ import java.util.Random;
 
 public class SimulationEngine extends AbstractWorldMap implements Runnable{
 
-    Parameters parameters= new Parameters();
+
 
     public AbstractWorldMap map;
     public App app;
     public int moveDelay;
     public WriteToCSV writeToCSV = new WriteToCSV();
 
-    public SimulationEngine(AbstractWorldMap map, App app){
+    public Parameters parameters;
+
+    public SimulationEngine(AbstractWorldMap map, App app, Parameters parameters){
         this.map = map;
         this.app = app;
+        this.parameters= parameters;
         Random r = new Random();
         for(int i = 0 ; i < parameters.startingAnimalsCount; i++) {
-            Genes genes = new Genes();
+            Genes genes = new Genes(parameters);
             Vector2d position = new Vector2d(r.nextInt(parameters.mapWidth),r.nextInt(parameters.mapHeight));
             Animal animal = new Animal(position,
                     r.nextInt(8),parameters.animalStartEnergy, r.nextInt(parameters.genomSize),
-                    genes, map );
+                    genes, map , parameters);
             map.place(animal);
 
         }

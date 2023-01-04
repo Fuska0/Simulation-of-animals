@@ -3,7 +3,11 @@ package agh.cs.po.Classes;
 import java.util.HashMap;
 
 public class GrassFieldToxicCorpses extends AbstractWorldMap{
-    Parameters parameters = new Parameters();
+    Parameters parameters;
+
+    public GrassFieldToxicCorpses(Parameters parameters){
+        this.parameters = parameters;
+    }
 
     public void GrassfieldForestedEquatoria(int n){
         generatePlants(n);
