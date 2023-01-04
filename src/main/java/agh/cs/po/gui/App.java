@@ -113,7 +113,12 @@ public class App extends Application {
 
         return statisticsButton;
     }
-
+    public Button pauseButton() {
+        Button pauseButton = new Button("Pause/Resume");
+        pauseButton.setOnAction(
+                (action) -> {engine.pause();});
+        return pauseButton;
+    }
 
     @Override
     public void init() throws Exception {
@@ -135,6 +140,7 @@ public class App extends Application {
         gridPane = new GridPane();
         prepareScene();
         Button button = stopButton(primaryStage);
+        Button pausebutton = pauseButton();
         Button statisticButton = statisticsButton(primaryStage);
 
         Thread thread = new Thread((Runnable) engine);
@@ -144,6 +150,7 @@ public class App extends Application {
         GridPane root = new GridPane();
         root.add(gridPane,1,0);
         root.add(button,1,1);
+        root.add(pausebutton,1,2);
         root.add(statisticButton,0,0);
         root.setAlignment(Pos.CENTER);
 

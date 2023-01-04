@@ -16,6 +16,8 @@ public class SimulationEngine extends AbstractWorldMap implements Runnable{
 
     public Parameters parameters;
 
+    public boolean stopped = false;
+
     public SimulationEngine(AbstractWorldMap map, App app, Parameters parameters){
         this.map = map;
         this.app = app;
@@ -39,17 +41,23 @@ public class SimulationEngine extends AbstractWorldMap implements Runnable{
         map.reproductingAnimals();
         map.addNewPlants();
         map.cleanUpDeadAnimal();
+        map.countFreeSpaces();
         writeToCSV.save(map.getStatistic());
     }
 
     public void setMoveDelay(int delay){
         this.moveDelay = delay;
     }
+
+    public void pause(){
+        stopped = !stopped;
+    }
     public void run()  {
         while(true)
         {
             app.refreshMap();
             try{
+                while(stopped){System.out.print("");}
                 evolution();
                 Thread.sleep(moveDelay);
             }

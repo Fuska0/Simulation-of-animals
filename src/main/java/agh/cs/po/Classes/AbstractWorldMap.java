@@ -186,7 +186,7 @@ public abstract class AbstractWorldMap implements IWorldMap {
                 }
             }
         }
-        freeSpaces = parameters.mapHeight * parameters.mapWidth - tmpOccupiedSpaces;
+
         animalCount = tmpAnimalsCount;
         if (tmpAnimalsCount > 0) {avgEnergy = (int) tmpEnergySum / tmpAnimalsCount;
             avdLivingDays = tmpAliveDaysSum / tmpAnimalsCount;}
@@ -212,5 +212,24 @@ public abstract class AbstractWorldMap implements IWorldMap {
 
         generatePlants(parameters.plantsGrowingNumber);
 
+    }
+
+    public void countFreeSpaces(){
+        int tmp = 0;
+        int tmp2 = 0;
+        for(Vector2d position : animalsHashMap.keySet()){
+            if (animalsHashMap.get(position).size() > 0 && plantsHashMap.get(position) == null){
+                tmp++;
+            }
+        }
+        for(Vector2d position : plantsHashMap.keySet()){
+            if (plantsHashMap.get(position) != null){
+                tmp++;
+                tmp2++;
+            }
+        }
+
+        freeSpaces = parameters.mapHeight*parameters.mapWidth-tmp;
+        plantCount = tmp2;
     }
 }
