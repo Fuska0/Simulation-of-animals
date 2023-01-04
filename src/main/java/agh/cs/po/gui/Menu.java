@@ -24,6 +24,7 @@ public class Menu extends Application {
     public int maxMutationsNumber;
     public int genomSize;
     public int time;
+    public int which;
 
     public static void main(String[] args) {
         launch(args);
@@ -117,6 +118,12 @@ public class Menu extends Application {
         grid.add(timeLabel, 0, 12);
         grid.add(timeLabelField, 1, 12);
 
+        //Grass type
+        Label grassType = new Label("0 - Toxic , 1 - Equator :");
+        TextField grassTypeField = new TextField("");
+        grid.add(grassType, 0, 13);
+        grid.add(grassTypeField, 1, 13);
+
         javafx.scene.control.Button submitButton = new javafx.scene.control.Button("Submit");
         submitButton.setOnAction(event -> {
             try {
@@ -163,6 +170,8 @@ public class Menu extends Application {
                 }
                 time = Integer.parseInt(timeLabelField.getText());
                 if(time <= 0){throw new IllegalArgumentException();}
+                which = Integer.parseInt(grassTypeField.getText());
+                if((which == 0 || which == 1) != true ) {throw new IllegalArgumentException();}
             }
             catch (IllegalArgumentException e) {
                 System.out.println(e);
@@ -179,7 +188,7 @@ public class Menu extends Application {
         HBox hbBtn = new HBox(10);
         hbBtn.setAlignment(javafx.geometry.Pos.BOTTOM_RIGHT);
         hbBtn.getChildren().add(submitButton);
-        grid.add(hbBtn, 1, 13);
+        grid.add(hbBtn, 1, 14);
 
         Scene scene = new Scene(grid, 300, 400);
         primaryStage.setScene(scene);
@@ -190,7 +199,7 @@ public class Menu extends Application {
         agh.cs.po.Classes.Parameters parameters = new agh.cs.po.Classes.Parameters(mapHeight, mapWidth, startingPlantCount, plantEnergy,
                 plantsGrowingNumber,startingAnimalsCount, animalStartEnergy, readyToBreed, energyYield,
                 minMutationsNumber, maxMutationsNumber, genomSize);
-        this.app = new App(parameters,time);
+        this.app = new App(parameters,time,which);
         this.app.start(new Stage());
 
     }

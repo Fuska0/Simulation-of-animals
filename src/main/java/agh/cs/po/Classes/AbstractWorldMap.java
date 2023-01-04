@@ -1,24 +1,22 @@
 package agh.cs.po.Classes;
 import agh.cs.po.Interfaces.IWorldMap;
-import java.util.Random;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
-public abstract class AbstractWorldMap implements IWorldMap {
 
+import java.util.*;
+
+public abstract class AbstractWorldMap implements IWorldMap {
     Parameters parameters ;
-    protected AbstractWorldMap(Parameters parameters){
-        this.parameters = parameters;
-    }
+    int which;
     protected HashMap<Vector2d,Plants> plantsHashMap = new HashMap<>();
     protected  HashMap<Vector2d, ArrayList<Animal>> animalsHashMap = new HashMap<>();
-    //protected int[][] deathsAmountArray=new int[parameters.mapWidth][parameters.mapHeight];
-    protected  ArrayList<Vector2d> freePlacesOnTheGroove = new ArrayList<Vector2d>();
-    protected  ArrayList<Vector2d> otherFreePlaces = new ArrayList<Vector2d>();
+    protected int[][] deathsAmountArray;
+    protected  ArrayList<Vector2d> plantsToAdd = new ArrayList<Vector2d>();
     protected int animalCount = 0, plantCount = 0,freeSpaces =0 ,avgEnergy=0,avdLivingDays=0;
 
-    protected AbstractWorldMap() {
+    protected AbstractWorldMap(Parameters parameters, int which){
+        this.parameters = parameters;
+        this.which = which;
     }
+    protected AbstractWorldMap() {}
 
     @Override
     public void place(Animal animal) {
@@ -54,13 +52,12 @@ public abstract class AbstractWorldMap implements IWorldMap {
     }
 
     public void positionChanged(Vector2d newPosition, Animal animal) {
-        if(animalsHashMap.get(newPosition) == null) {animalsHashMap.put(newPosition,
-                new ArrayList<Animal>());}
+        animalsHashMap.computeIfAbsent(newPosition, k -> new ArrayList<Animal>());
         Vector2d oldPosition = animal.getPosition();
         if (oldPosition.getX() != newPosition.getX() || oldPosition.getY() != newPosition.getY())
         {animal.move();
-        animalsHashMap.get(oldPosition).remove(animal);
-        animalsHashMap.get(newPosition).add(animal);}
+            animalsHashMap.get(oldPosition).remove(animal);
+            animalsHashMap.get(newPosition).add(animal);}
         else {animal.changeOrientatnion();}
     }
 
@@ -94,22 +91,48 @@ public abstract class AbstractWorldMap implements IWorldMap {
     }
 
     public void generatePlants(int numberOf) {
-        for(int i = 0; i< numberOf; i++) {
-            Random r = new Random();
-            int propability = r.nextInt(10);
-            if (freePlacesOnTheGroove.size() > 0 && propability < 8){
-                int tmp = r .nextInt(0,freePlacesOnTheGroove.size());
-                Vector2d position = freePlacesOnTheGroove.get(tmp);
-                addGrass(position);
-                freePlacesOnTheGroove.remove(position);
-
-            } else if (otherFreePlaces.size() > 0) {
-                int tmp = r .nextInt(0,otherFreePlaces.size());
-                Vector2d position = otherFreePlaces.get(tmp);
-                addGrass(position);
-                otherFreePlaces.remove(position);
+        int a = parameters.mapWidth;
+        int b = parameters.mapHeight;
+        for(int i = 0; i < a; i++){
+            for(int j = 0; j < b ; j++){
+                if (plantsHashMap.get(new Vector2d(i, j)) == null) {
+                    if (j >= (int) b/3 + 1 && j < (int) 2*b/3 + 1) {
+                        for (int k = 0; k < 3; k++) {
+                            plantsToAdd.add(new Vector2d(i, j));
+                        }
+                    }
+                    else{
+                        plantsToAdd.add(new Vector2d(i, j));
+                    }
+                }
             }
         }
+        Collections.shuffle(plantsToAdd);
+        for(int i = 0; i< numberOf && i<plantsToAdd.size(); i++) {
+            Vector2d position = plantsToAdd.get(i);
+            addGrass(position);
+        }
+        plantsToAdd.clear();
+    }
+
+    public void generatePlants1(int numberOf) {
+        int a = parameters.mapWidth;
+        int b = parameters.mapHeight;
+        for(int i = 0; i < a; i++){
+            for(int j = 0; j < b ; j++){
+                if (plantsHashMap.get(new Vector2d(i, j)) == null) {
+                    for (int k=0; k<=deathsAmountArray[i][j];k++) {
+                        plantsToAdd.add(new Vector2d(i, j));
+                    }
+                }
+            }
+        }
+        Collections.shuffle(plantsToAdd);
+        for(int i = 0; i< numberOf && i<plantsToAdd.size(); i++) {
+            Vector2d position = plantsToAdd.get(i);
+            addGrass(position);
+        }
+        plantsToAdd.clear();
     }
 
     public void addGrass(Vector2d position){
@@ -122,7 +145,7 @@ public abstract class AbstractWorldMap implements IWorldMap {
         ArrayList<Vector2d> positionsList = new ArrayList<Vector2d>();
         for (Vector2d position : animalsHashMap.keySet()) {
             if(animalsHashMap.get(position) != null && animalsHashMap.get(position).size() >0){
-            positionsList.add(position);}}
+                positionsList.add(position);}}
         for (Vector2d position : positionsList){
             if(animalsHashMap.get(position) != null && animalsHashMap.get(position).size()>0) {
                 for(int i = 0; i < animalsHashMap.get(position).size(); i++ ) {
@@ -155,13 +178,12 @@ public abstract class AbstractWorldMap implements IWorldMap {
 
     public void cleanUpDeadAnimal(){
         ArrayList<Vector2d> positionsList = new ArrayList<Vector2d>();
-        int tmpAnimalsCount = 0, tmpOccupiedSpaces= 0, tmpEnergySum=0, tmpAliveDaysSum = 0;
+        int tmpAnimalsCount = 0, tmpEnergySum=0, tmpAliveDaysSum = 0;
         for (Vector2d position : animalsHashMap.keySet()) {
             positionsList.add(position);
         }
         for (Vector2d position : positionsList) {
             if (animalsHashMap.get(position) != null) {
-                tmpOccupiedSpaces++;
                 for (int i = 0 ; i < animalsHashMap.get(position).size(); i++) {
                     Animal animal = animalsHashMap.get(position).get(i);
                     animal.addEnergy(-1);
@@ -178,20 +200,18 @@ public abstract class AbstractWorldMap implements IWorldMap {
                 }
             }
         }
-        for (int i = 0 ; i < parameters.mapWidth; i++){
-            for (int j = 0 ; j < parameters.mapHeight; j++){
-                Vector2d pos = new Vector2d(i,j);
-                if (animalsHashMap.get(pos)!=null || plantsHashMap.get(pos)!=null){
-                    tmpOccupiedSpaces++;
-                }
-            }
-        }
-
         animalCount = tmpAnimalsCount;
         if (tmpAnimalsCount > 0) {avgEnergy = (int) tmpEnergySum / tmpAnimalsCount;
             avdLivingDays = tmpAliveDaysSum / tmpAnimalsCount;}
         else {avgEnergy = 0;
             avdLivingDays = 0;}
+    }
+    protected void initDeathsArray(Parameters parameters){
+        for(int i = 0; i < parameters.mapWidth; i++) {
+            for (int j = 0; j < parameters.mapHeight; j++) {
+                deathsAmountArray[i][j] = 0;
+            }
+        }
     }
 
     public void eatGrass() {
@@ -201,17 +221,13 @@ public abstract class AbstractWorldMap implements IWorldMap {
                     plantsHashMap.remove(position);
                     animalsHashMap.get(position).get(0).addEnergy(parameters.plantEnergy);
                     plantCount -= 1;
-                    if (position.getY() >= (int) parameters.mapHeight/3 + 1 && position.getY() < (int) 2*parameters.mapHeight/3 + 1){
-                        freePlacesOnTheGroove.add(position);}
-                    else {otherFreePlaces.add(position);}
                 }
             }
         }
     }
     public void addNewPlants(){
-
-        generatePlants(parameters.plantsGrowingNumber);
-
+        if(which == 1){generatePlants(parameters.plantsGrowingNumber);}
+        else {generatePlants1(parameters.plantsGrowingNumber);}
     }
 
     public void countFreeSpaces(){

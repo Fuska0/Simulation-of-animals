@@ -22,12 +22,14 @@ public class App extends Application {
     private int WIDTH;
     private int HEIGHT;
     private int time;
+    private int whcich;
 
-    public App(agh.cs.po.Classes.Parameters parameters, int time){
+    public App(agh.cs.po.Classes.Parameters parameters, int time, int which){
         this.par = parameters;
         this.HEIGHT = par.mapHeight;
         this.WIDTH = par.mapWidth;
         this.time = time;
+        this.whcich = which;
     }
     private AbstractWorldMap map;
     private SimulationEngine engine;
@@ -125,7 +127,6 @@ public class App extends Application {
     @Override
     public void init() throws Exception {
 
-        map = new PlantsFieldForestedEquatoria();
         engine = new SimulationEngine(map, this, par);
         engine.setMoveDelay(time);
         gridPane = new GridPane();
@@ -136,7 +137,9 @@ public class App extends Application {
     @Override
     public void start(Stage primaryStage) throws InterruptedException {
         //refreshMap();
-        map = new PlantsFieldForestedEquatoria(par);
+        if(whcich == 1){
+        map = new PlantsFieldForestedEquatoria(par);}
+        else{map = new GrassFieldToxicCorpses(par);}
         engine = new SimulationEngine(map, this, par);
         engine.setMoveDelay(time);
         gridPane = new GridPane();
