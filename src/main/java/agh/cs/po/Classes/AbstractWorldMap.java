@@ -10,7 +10,8 @@ public abstract class AbstractWorldMap implements IWorldMap {
     protected  HashMap<Vector2d, ArrayList<Animal>> animalsHashMap = new HashMap<>();
     protected int[][] deathsAmountArray;
     protected  ArrayList<Vector2d> plantsToAdd = new ArrayList<Vector2d>();
-    protected int animalCount = 0, plantCount = 0,freeSpaces =0 ,avgEnergy=0,avdLivingDays=0;
+    protected int animalCount = 0, plantCount = 0,freeSpaces =0 ,avgEnergy=0,avdLivingDays=0, deathCount= 0,
+    deathAimalLivingDays = 0, avgDeathAimalLivingDays = 0, day = 1;
 
     protected AbstractWorldMap(Parameters parameters, int which){
         this.parameters = parameters;
@@ -29,11 +30,15 @@ public abstract class AbstractWorldMap implements IWorldMap {
 
     public String getStatistic(){
         StringBuilder napis = new StringBuilder();
+        napis.append("Day number :").append(Integer.toString(day)).append("\r\n");
         napis.append("Animal count: ").append(Integer.toString(animalCount)).append("\r\n");
         napis.append("Plants count: ").append(Integer.toString(plantCount)).append("\r\n");
-        napis.append("Free Spaces: ").append(Integer.toString(freeSpaces)).append("\r\n");
+        napis.append("Free spaces: ").append(Integer.toString(freeSpaces)).append("\r\n");
         napis.append("Average energy: ").append(Integer.toString(avgEnergy)).append("\r\n");
         napis.append("Average living days: ").append(Integer.toString(avdLivingDays)).append("\r\n");
+        napis.append("Death count: ").append(Integer.toString(deathCount)).append("\r\n");
+        napis.append("Death animal living days :").append(Integer.toString(deathAimalLivingDays)).append("\r\n");
+        napis.append("Average death animal living days :").append(Integer.toString(avgDeathAimalLivingDays)).append("\r\n");
         return String.valueOf(napis);}
 
     @Override
@@ -179,6 +184,7 @@ public abstract class AbstractWorldMap implements IWorldMap {
     public void cleanUpDeadAnimal(){
         ArrayList<Vector2d> positionsList = new ArrayList<Vector2d>();
         int tmpAnimalsCount = 0, tmpEnergySum=0, tmpAliveDaysSum = 0;
+        day++;
         for (Vector2d position : animalsHashMap.keySet()) {
             positionsList.add(position);
         }
@@ -189,6 +195,9 @@ public abstract class AbstractWorldMap implements IWorldMap {
                     animal.addEnergy(-1);
                     if (animal.getEnergy() <= 0) {
                         animal.sorryYourDead();
+                        deathCount++;
+                        deathAimalLivingDays += animal.getAliveDays();
+                        avgDeathAimalLivingDays = (int) (deathAimalLivingDays / deathCount);
                         animalsHashMap.get(position).remove(animal);
                         //deathsAmountArray[position.x][position.y]+=1;
                     }
