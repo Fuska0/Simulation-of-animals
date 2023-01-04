@@ -21,11 +21,13 @@ public class App extends Application {
 
     private int WIDTH;
     private int HEIGHT;
+    private int time;
 
-    public App(agh.cs.po.Classes.Parameters parameters){
+    public App(agh.cs.po.Classes.Parameters parameters, int time){
         this.par = parameters;
         this.HEIGHT = par.mapHeight;
         this.WIDTH = par.mapWidth;
+        this.time = time;
     }
     private AbstractWorldMap map;
     private SimulationEngine engine;
@@ -125,7 +127,7 @@ public class App extends Application {
 
         map = new PlantsFieldForestedEquatoria();
         engine = new SimulationEngine(map, this, par);
-        engine.setMoveDelay(1000);
+        engine.setMoveDelay(time);
         gridPane = new GridPane();
 
     }
@@ -136,7 +138,7 @@ public class App extends Application {
         //refreshMap();
         map = new PlantsFieldForestedEquatoria(par);
         engine = new SimulationEngine(map, this, par);
-        engine.setMoveDelay(1000);
+        engine.setMoveDelay(time);
         gridPane = new GridPane();
         prepareScene();
         Button button = stopButton(primaryStage);
@@ -146,16 +148,12 @@ public class App extends Application {
         Thread thread = new Thread((Runnable) engine);
         thread.start();
 
-
         GridPane root = new GridPane();
         root.add(gridPane,1,0);
         root.add(button,1,1);
         root.add(pausebutton,1,2);
         root.add(statisticButton,0,0);
         root.setAlignment(Pos.CENTER);
-
-
-
 
         Scene scene = new Scene(root,1500,800);
         primaryStage.setScene(scene);

@@ -23,7 +23,7 @@ public class Menu extends Application {
     public int minMutationsNumber;
     public int maxMutationsNumber;
     public int genomSize;
-
+    public int time;
 
     public static void main(String[] args) {
         launch(args);
@@ -110,35 +110,64 @@ public class Menu extends Application {
         grid.add(genomSizeLabel, 0, 11);
         grid.add(genomSizeField, 1, 11);
 
+        //time
+
+        Label timeLabel = new Label("Time :");
+        TextField timeLabelField = new TextField("300");
+        grid.add(timeLabel, 0, 12);
+        grid.add(timeLabelField, 1, 12);
+
         javafx.scene.control.Button submitButton = new javafx.scene.control.Button("Submit");
         submitButton.setOnAction(event -> {
-            // get values from text fields
-            mapHeight = Integer.parseInt(mapHeightField.getText());
-            mapWidth = Integer.parseInt(mapWidthField.getText());
-            startingPlantCount = Integer.parseInt(startingPlantCountField.getText());
-            plantEnergy = Integer.parseInt(plantEnergyField.getText());
-            plantsGrowingNumber = Integer.parseInt(plantsGrowingNumberField.getText());
-            startingAnimalsCount = Integer.parseInt(startingAnimalsCountField.getText());
-            animalStartEnergy = Integer.parseInt(animalStartEnergyField.getText());
-            readyToBreed = Integer.parseInt(readyToBreedField.getText());
-            energyYield = Integer.parseInt(energyYieldField.getText());
-            minMutationsNumber = Integer.parseInt(minMutationsNumberField.getText());
-            maxMutationsNumber = Integer.parseInt(maxMutationsNumberField.getText());
-            genomSize = Integer.parseInt(genomSizeField.getText());
-
-            // print values to console
-            System.out.println("Map height: " + mapHeight);
-            System.out.println("Map width: " + mapWidth);
-            System.out.println("Starting plant count: " + startingPlantCount);
-            System.out.println("Plant energy: " + plantEnergy);
-            System.out.println("Plants growing number: " + plantsGrowingNumber);
-            System.out.println("Starting animals count: " + startingAnimalsCount);
-            System.out.println("Animal start energy: " + animalStartEnergy);
-            System.out.println("Ready to breed: " + readyToBreed);
-            System.out.println("Energy yield: " + energyYield);
-            System.out.println("Min mutations number: " + minMutationsNumber);
-            System.out.println("Max mutations number: " + maxMutationsNumber);
-            System.out.println("Genom size: " + genomSize);
+            try {
+                // get values from text fields
+                mapHeight = Integer.parseInt(mapHeightField.getText());
+                if (mapHeight < 0) {
+                    throw new IllegalArgumentException();
+                }
+                mapWidth = Integer.parseInt(mapWidthField.getText());
+                if (mapWidth < 0 ) {
+                    throw new IllegalArgumentException();
+                }
+                startingPlantCount = Integer.parseInt(startingPlantCountField.getText());
+                if (startingPlantCount <= 0) {
+                    throw new IllegalArgumentException();
+                }
+                plantEnergy = Integer.parseInt(plantEnergyField.getText());
+                if(plantEnergy <= 0){
+                    throw new IllegalArgumentException();
+                }
+                plantsGrowingNumber = Integer.parseInt(plantsGrowingNumberField.getText());
+                if(plantsGrowingNumber <= 0){
+                    throw new IllegalArgumentException();
+                }
+                startingAnimalsCount = Integer.parseInt(startingAnimalsCountField.getText());
+                if(startingAnimalsCount <= 0){
+                    throw new IllegalArgumentException();
+                }
+                animalStartEnergy = Integer.parseInt(animalStartEnergyField.getText());
+                if(animalStartEnergy <=0) {
+                    throw new IllegalArgumentException();
+                }
+                readyToBreed = Integer.parseInt(readyToBreedField.getText());
+                if(readyToBreed <=0 ) {
+                    throw new IllegalArgumentException();
+                }
+                energyYield = Integer.parseInt(energyYieldField.getText());
+                if(energyYield <= 0) {throw new IllegalArgumentException();}
+                minMutationsNumber = Integer.parseInt(minMutationsNumberField.getText());
+                maxMutationsNumber = Integer.parseInt(maxMutationsNumberField.getText());
+                genomSize = Integer.parseInt(genomSizeField.getText());
+                if(minMutationsNumber >= maxMutationsNumber || maxMutationsNumber > genomSize || minMutationsNumber >= genomSize){
+                    throw new IllegalArgumentException();
+                }
+                time = Integer.parseInt(timeLabelField.getText());
+                if(time <= 0){throw new IllegalArgumentException();}
+            }
+            catch (IllegalArgumentException e) {
+                System.out.println(e);
+                System.exit(0);
+            }
 
             try {
                 startSimulation();
@@ -150,7 +179,7 @@ public class Menu extends Application {
         HBox hbBtn = new HBox(10);
         hbBtn.setAlignment(javafx.geometry.Pos.BOTTOM_RIGHT);
         hbBtn.getChildren().add(submitButton);
-        grid.add(hbBtn, 1, 12);
+        grid.add(hbBtn, 1, 13);
 
         Scene scene = new Scene(grid, 300, 400);
         primaryStage.setScene(scene);
@@ -161,7 +190,7 @@ public class Menu extends Application {
         agh.cs.po.Classes.Parameters parameters = new agh.cs.po.Classes.Parameters(mapHeight, mapWidth, startingPlantCount, plantEnergy,
                 plantsGrowingNumber,startingAnimalsCount, animalStartEnergy, readyToBreed, energyYield,
                 minMutationsNumber, maxMutationsNumber, genomSize);
-        this.app = new App(parameters);
+        this.app = new App(parameters,time);
         this.app.start(new Stage());
 
     }
