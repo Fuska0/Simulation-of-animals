@@ -12,7 +12,7 @@ public class SimulationEngine extends AbstractWorldMap implements Runnable{
     public AbstractWorldMap map;
     public App app;
     public int moveDelay;
-
+    public WriteToCSV writeToCSV = new WriteToCSV();
 
     public SimulationEngine(AbstractWorldMap map, App app){
         this.map = map;
@@ -36,6 +36,7 @@ public class SimulationEngine extends AbstractWorldMap implements Runnable{
         map.reproductingAnimals();
         map.addNewPlants();
         map.cleanUpDeadAnimal();
+        writeToCSV.save(map.getStatistic());
     }
 
     public void setMoveDelay(int delay){

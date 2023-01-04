@@ -48,9 +48,11 @@ public abstract class AbstractWorldMap implements IWorldMap {
         if(animalsHashMap.get(newPosition) == null) {animalsHashMap.put(newPosition,
                 new ArrayList<Animal>());}
         Vector2d oldPosition = animal.getPosition();
-        animal.move();
+        if (oldPosition.getX() != newPosition.getX() || oldPosition.getY() != newPosition.getY())
+        {animal.move();
         animalsHashMap.get(oldPosition).remove(animal);
-        animalsHashMap.get(newPosition).add(animal);
+        animalsHashMap.get(newPosition).add(animal);}
+        else {animal.changeOrientatnion();}
     }
 
     public void animalsSort(ArrayList<Animal> animalList){
@@ -117,7 +119,7 @@ public abstract class AbstractWorldMap implements IWorldMap {
                 for(int i = 0; i < animalsHashMap.get(position).size(); i++ ) {
                     Animal animal = animalsHashMap.get(position).get(i);
                     Vector2d how = animal.unitToVector();
-                    Vector2d newPosition = animal.getPosition().addWithModulo(how);
+                    Vector2d newPosition = animal.addWithModulo(how);
                     positionChanged(newPosition, animal);
                 }
             }

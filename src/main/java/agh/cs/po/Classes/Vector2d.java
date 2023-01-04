@@ -30,13 +30,7 @@ public class Vector2d {
         return new Vector2d(x + other.x, y + other.y);
     }
 
-    public Vector2d addWithModulo(Vector2d other){
-        int newX =(x + other.x)%( parameters.mapWidth );
-        int newY =(y + other.y)%(parameters.mapHeight );
-        if (newX < 0) {newX = parameters.mapWidth-1;}
-        if (newY < 0) {newY = parameters.mapHeight-1;}
-        return new Vector2d(newX,newY);
-    }
+
 
     public Vector2d subtract(Vector2d other){
         return new Vector2d(x - other.x, y - other.y);

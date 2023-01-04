@@ -47,11 +47,18 @@ public class Animal {
             default -> throw new IllegalStateException("Unexpected value: " + currentGen);
         });
     }
-    //
+    public Vector2d addWithModulo(Vector2d other){
+        int newX =(position.x + other.x)%( parameters.mapWidth );
+        if (newX < 0) {newX = parameters.mapWidth-1;}
+        int newY =(position.y + other.y);
+        if(newY > parameters.mapHeight-1){newY = parameters.mapHeight-1;}
+        if (newY < 0) {newY = 0;}
+        return new Vector2d(newX,newY);
+    }
     public void move(){
         Vector2d vector = unitToVector();
-        this.position = this.position.addWithModulo(vector);
-        orientation = (genes.getArrayGenes()[currentGen] + orientation)%8;
+        this.position = addWithModulo(vector);
+
         Random r = new Random();
         if (r.nextInt() < 2){
             currentGen = r.nextInt(parameters.genomSize);
