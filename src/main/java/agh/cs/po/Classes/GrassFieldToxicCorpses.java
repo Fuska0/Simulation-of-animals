@@ -6,15 +6,10 @@ public class GrassFieldToxicCorpses extends AbstractWorldMap {
     int which;
     int mapWidth;
     int mapHeight;
-
-
     public GrassFieldToxicCorpses(Parameters parameters) {
         super(parameters,0);
         this.mapHeight = parameters.mapHeight;
         this.mapWidth = parameters.mapWidth;
-        deathsAmountArray = new int[parameters.mapWidth][parameters.mapHeight];
-        initDeathsArray(parameters);
-        generatePlants1(parameters.startingPlantCount);
         deathsAmountArray = new int[mapWidth][mapHeight];
         initDeathsArray(parameters);
         generatePlants1(parameters.startingPlantCount);

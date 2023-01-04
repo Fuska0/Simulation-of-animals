@@ -2,8 +2,6 @@ package agh.cs.po.Classes;
 import java.util.Random;
 
 public class Genes {
-
-
     Parameters parameters;
     private int[] genes;
     private int n;
@@ -16,10 +14,7 @@ public class Genes {
         for (int i = 0; i < n; i++){
             genes[i] = r.nextInt(8);
         }
-
     }
-
-
     public int[] getArrayGenes(){
         return genes;
     }
@@ -57,7 +52,4 @@ public class Genes {
             }
         }
     }
-
-
-
 }

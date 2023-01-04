@@ -116,6 +116,11 @@ public abstract class AbstractWorldMap implements IWorldMap {
         for(int i = 0; i< numberOf && i<plantsToAdd.size(); i++) {
             Vector2d position = plantsToAdd.get(i);
             addGrass(position);
+            for (int j=0; j<plantsToAdd.size(); j++){
+                if (plantsToAdd.get(j)==position){
+                    plantsToAdd.remove(j);
+                }
+            }
         }
         plantsToAdd.clear();
     }
@@ -136,6 +141,11 @@ public abstract class AbstractWorldMap implements IWorldMap {
         for(int i = 0; i< numberOf && i<plantsToAdd.size(); i++) {
             Vector2d position = plantsToAdd.get(i);
             addGrass(position);
+            for (int j=0; j<plantsToAdd.size(); j++){
+                if (plantsToAdd.get(j)==position){
+                    plantsToAdd.remove(j);
+                }
+            }
         }
         plantsToAdd.clear();
     }
@@ -199,7 +209,7 @@ public abstract class AbstractWorldMap implements IWorldMap {
                         deathAimalLivingDays += animal.getAliveDays();
                         avgDeathAimalLivingDays = (int) (deathAimalLivingDays / deathCount);
                         animalsHashMap.get(position).remove(animal);
-                        //deathsAmountArray[position.x][position.y]+=1;
+                        deathsAmountArray[position.x][position.y]+=1;
                     }
                     else {
                         animal.oneMoreAliveDay();
@@ -253,9 +263,7 @@ public abstract class AbstractWorldMap implements IWorldMap {
                 tmp2++;
             }
         }
-
         freeSpaces = parameters.mapHeight*parameters.mapWidth-tmp;
         plantCount = tmp2;
-
     }
 }

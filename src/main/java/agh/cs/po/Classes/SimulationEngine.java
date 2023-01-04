@@ -7,15 +7,10 @@ import java.util.Random;
 
 public class SimulationEngine extends AbstractWorldMap implements Runnable{
 
-
-
     public AbstractWorldMap map;
     public App app;
     public int moveDelay;
     public WriteToCSV writeToCSV = new WriteToCSV();
-
-    public Parameters parameters;
-
     public boolean stopped = false;
 
     public SimulationEngine(AbstractWorldMap map, App app, Parameters parameters){
@@ -30,7 +25,6 @@ public class SimulationEngine extends AbstractWorldMap implements Runnable{
                     r.nextInt(8),parameters.animalStartEnergy, r.nextInt(parameters.genomSize),
                     genes, map , parameters);
             map.place(animal);
-
         }
     }
 
@@ -45,7 +39,6 @@ public class SimulationEngine extends AbstractWorldMap implements Runnable{
         writeToCSV.save(map.getStatistic());
     }
 
-
     public void setMoveDelay(int delay){
         this.moveDelay = delay;
     }
@@ -53,6 +46,7 @@ public class SimulationEngine extends AbstractWorldMap implements Runnable{
     public void pause(){
         stopped = !stopped;
     }
+
     public void run()  {
         while(true)
         {

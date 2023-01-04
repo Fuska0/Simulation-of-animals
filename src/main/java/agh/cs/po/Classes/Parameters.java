@@ -32,6 +32,4 @@ public class Parameters {
     int minMutationsNumber ;
     int maxMutationsNumber ;
     int genomSize ;
-
-
 }

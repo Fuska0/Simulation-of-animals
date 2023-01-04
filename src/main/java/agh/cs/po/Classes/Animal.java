@@ -48,6 +48,7 @@ public class Animal {
             default -> throw new IllegalStateException("Unexpected value: " + currentGen);
         });
     }
+
     public Vector2d addWithModulo(Vector2d other){
         int newX =(position.x + other.x)%( parameters.mapWidth );
         if (newX < 0) {newX = parameters.mapWidth-1;}
@@ -56,6 +57,7 @@ public class Animal {
         if (newY < 0) {newY = 0;}
         return new Vector2d(newX,newY);
     }
+
     public void move(){
         Vector2d vector = unitToVector();
         this.position = addWithModulo(vector);
@@ -71,19 +73,15 @@ public class Animal {
         energy -= howMany;
     }
     public void addEnergy(int howMany) {energy += howMany;}
-
     public String toString(){
         return String.valueOf(map.animalsHashMap.get(position).size());
     }
-
     public void oneMoreAliveDay(){
         aliveDays += 1;
     }
-
     public void sorryYourDead(){
         deathDay = aliveDays;
     }
-
     public String label(){
         StringBuilder napis = new StringBuilder();
         String prefix = "";
@@ -91,10 +89,7 @@ public class Animal {
             napis.append(prefix);
             prefix = ",";
             napis.append(Integer.toString(animal.getEnergy()));
-
-
         }
-
         return String.valueOf(napis);
     }
 

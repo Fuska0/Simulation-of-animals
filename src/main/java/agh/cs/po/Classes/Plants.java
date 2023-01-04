@@ -9,16 +9,12 @@ public class Plants {
         this.parameters = parameters;
         this.energy = parameters.plantEnergy;
     }
-
-
     public Vector2d getPosition() {
         return position;
     }
-
     public String toString(){
         return "*";
     }
-
     public String getImagePath(){
         return "glon";
     }
