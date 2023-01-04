@@ -123,7 +123,12 @@ public class App extends Application {
 
     @Override
     public void start(Stage primaryStage) throws InterruptedException {
-        refreshMap();
+        //refreshMap();
+        map = new PlantsFieldForestedEquatoria();
+        engine = new SimulationEngine(map, this);
+        engine.setMoveDelay(1000);
+        gridPane = new GridPane();
+        prepareScene();
         Button button = stopButton(primaryStage);
         Button statisticButton = statisticsButton(primaryStage);
 

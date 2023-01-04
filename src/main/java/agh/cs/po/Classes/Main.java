@@ -1,6 +1,6 @@
 package agh.cs.po.Classes;
 
-import agh.cs.po.gui.App;
+import agh.cs.po.gui.Menu;
 
 public class Main {
 
@@ -10,7 +10,7 @@ public class Main {
         //AbstractWorldMap map = new PlantsFieldForestedEquatoria();
         //SimulationEngine engine = new SimulationEngine( map);
         //System.out.println(map.toString());
-        App.launch(App.class);
+        Menu.launch(Menu.class);
 
     }
 
