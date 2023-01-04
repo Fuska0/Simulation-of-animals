@@ -110,9 +110,10 @@ public abstract class AbstractWorldMap implements IWorldMap {
     public void moveAnimals(){
         ArrayList<Vector2d> positionsList = new ArrayList<Vector2d>();
         for (Vector2d position : animalsHashMap.keySet()) {
-            positionsList.add(position);}
+            if(animalsHashMap.get(position) != null && animalsHashMap.get(position).size() >0){
+            positionsList.add(position);}}
         for (Vector2d position : positionsList){
-            if(animalsHashMap.get(position) != null) {
+            if(animalsHashMap.get(position) != null && animalsHashMap.get(position).size()>0) {
                 for(int i = 0; i < animalsHashMap.get(position).size(); i++ ) {
                     Animal animal = animalsHashMap.get(position).get(i);
                     Vector2d how = animal.unitToVector();
@@ -202,5 +203,3 @@ public abstract class AbstractWorldMap implements IWorldMap {
 
     }
 }
-
-

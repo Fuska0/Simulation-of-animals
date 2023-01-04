@@ -107,19 +107,6 @@ public class Menu extends Application {
             int maxMutationsNumber = Integer.parseInt(maxMutationsNumberField.getText());
             int genomSize = Integer.parseInt(genomSizeField.getText());
 
-            // print values to console
-            System.out.println("Map height: " + mapHeight);
-            System.out.println("Map width: " + mapWidth);
-            System.out.println("Starting plant count: " + startingPlantCount);
-            System.out.println("Plant energy: " + plantEnergy);
-            System.out.println("Plants growing number: " + plantsGrowingNumber);
-            System.out.println("Starting animals count: " + startingAnimalsCount);
-            System.out.println("Animal start energy: " + animalStartEnergy);
-            System.out.println("Ready to breed: " + readyToBreed);
-            System.out.println("Energy yield: " + energyYield);
-            System.out.println("Min mutations number: " + minMutationsNumber);
-            System.out.println("Max mutations number: " + maxMutationsNumber);
-            System.out.println("Genom size: " + genomSize);
         });
 
         HBox hbBtn = new HBox(10);
@@ -132,4 +119,3 @@ public class Menu extends Application {
         primaryStage.show();
     }
 }
-

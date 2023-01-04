@@ -115,7 +115,7 @@ public class App extends Application {
 
         map = new PlantsFieldForestedEquatoria();
         engine = new SimulationEngine(map, this);
-        engine.setMoveDelay(300);
+        engine.setMoveDelay(1000);
         gridPane = new GridPane();
 
     }

@@ -35,7 +35,7 @@ public class Animal {
     public int getDeathDay() {return deathDay;}
 
     public Vector2d unitToVector( ) throws IllegalStateException{
-        return(switch(genes.getArrayGenes()[currentGen]) {
+        return(switch((genes.getArrayGenes()[currentGen] + orientation)%8) {
             case 0 -> new Vector2d(0,1);
             case 1 -> new Vector2d(1,1);
             case 2 -> new Vector2d(1,0);
@@ -51,6 +51,7 @@ public class Animal {
     public void move(){
         Vector2d vector = unitToVector();
         this.position = this.position.addWithModulo(vector);
+        orientation = (genes.getArrayGenes()[currentGen] + orientation)%8;
         Random r = new Random();
         if (r.nextInt() < 2){
             currentGen = r.nextInt(parameters.genomSize);
@@ -86,5 +87,9 @@ public class Animal {
         }
 
         return String.valueOf(napis);
+    }
+
+    public void changeOrientatnion(){
+        orientation = (orientation + 4)%8;
     }
 }
